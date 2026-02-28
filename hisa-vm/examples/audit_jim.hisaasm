@@ -1,0 +1,7 @@
+; Audit Jim (ج) using HISA-VM core opcodes
+; assumes HIJAIYYAH_28 order: index 4 == ج
+
+LDH_V18 V0, 4
+SETFLAG CLOSED_HINT, 0
+AUDIT V0
+HALT

@@ -1,0 +1,56 @@
+{
+    "csgi_version": "CSGI-DATASET-1.0",
+    "letters": [
+        {
+            "csgi_version": "CSGI-1.0",
+            "letter": "ا",
+            "embedding": {
+                "coord_system": "raster",
+                "axis_convention": "x_right_y_down",
+                "units": "px",
+                "bbox_body": [
+                    0,
+                    0,
+                    0,
+                    2
+                ]
+            },
+            "nodes": [
+                {
+                    "id": 1,
+                    "x": 0,
+                    "y": 0,
+                    "kind": "endpoint",
+                    "degree": 1
+                },
+                {
+                    "id": 2,
+                    "x": 0,
+                    "y": 2,
+                    "kind": "endpoint",
+                    "degree": 1
+                }
+            ],
+            "edges": [
+                {
+                    "id": 1,
+                    "u": 1,
+                    "v": 2,
+                    "points": [
+                        [
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            2
+                        ]
+                    ]
+                }
+            ],
+            "meta": {
+                "adjacency": "8-neighborhood"
+            }
+        }
+    ]
+}

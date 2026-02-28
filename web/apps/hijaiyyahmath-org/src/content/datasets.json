@@ -1,0 +1,14 @@
+{
+    "datasets": [
+        {
+            "name": "MH-28-v1.0-18D.csv",
+            "description": "Master v18 feature table (28 letters).",
+            "sha256": "6020188a7929ddf6231ac2f61c96ac0007761f8d0512dd7ce2ffd2ec018f12bd"
+        },
+        {
+            "name": "CSGI-28-v1.0.json",
+            "description": "Canonical character skeleton graph dataset.",
+            "sha256": "530845fbc3815ea9f02c75d44bda0e1aa096ec93729942d24d2d8bb0bd56c9d5"
+        }
+    ]
+}

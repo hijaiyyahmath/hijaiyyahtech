@@ -1,0 +1,14 @@
+{
+    "release_id": "HCPU-AI-v1.0+local.1",
+    "isa_contract": "HISA-v1.0",
+    "artifacts": [
+        {
+            "path": "spec/HCPU_AI_v1_0.md",
+            "sha256": "D924EB1E9F6047FCCA12469977456615F2815F630BDE20B90B90DB3DAA166169"
+        },
+        {
+            "path": "tools/hcpu_ai_demo.py",
+            "sha256": "E52587A3595EDD4F91C90DCC430933DE1237498BE3A0CE388996708CEE5BB02F"
+        }
+    ]
+}

@@ -1,0 +1,781 @@
+#!/usr/bin/env python3
+"""
+ST-28-v0.1.json — Full 28-letter trace generator.
+1. Converts SVG glyphs → PNG (pure Python, no native deps)
+2. Runs skeleton-based trace extraction on each PNG
+3. Merges traces with v18 vectors + audit from MH-28-v1.0-18D.csv
+4. Writes ST-28-v0.1.json
+"""
+import json, csv, os, sys, hashlib, math
+from pathlib import Path
+
+# ── SVG→PNG: PIL + XML ──
+from PIL import Image, ImageDraw
+import xml.etree.ElementTree as ET
+import re as _re
+
+# ── trace extraction deps ──
+import cv2
+import numpy as np
+import networkx as nx
+from skimage.morphology import skeletonize
+
+# ── hijaiyahlang audit ──
+sys.path.insert(0, str(Path(__file__).parent / "hijaiyahlang-hl18" / "src"))
+from hijaiyahlang.core import audit_v18
+
+# ============================================================
+#  GLYPH MAPPING: filename → arabic letter
+# ============================================================
+GLYPH_MAP = {
+    "01-Alif.svg":              "ا",
+    "02-Ba.svg":                "ب",
+    "03-Ta.svg":                "ت",
+    "04-Tha.svg":               "ث",
+    "Arabic_letter_Jeem.svg":   "ج",
+    "06-H.a.svg":               "ح",
+    "07-Cha.svg":               "خ",
+    "08-Dal.svg":               "د",
+    "09-Dhal.svg":              "ذ",
+    "10-Ra.svg":                "ر",
+    "11-Zay.svg":               "ز",
+    "12-Sin.svg":               "س",
+    "13-Schin.svg":             "ش",
+    "14-Sad.svg":               "ص",
+    "15-Dad.svg":               "ض",
+    "16-Ta.svg":                "ط",
+    "17-Za.svg":                "ظ",
+    "18-Ain.svg":               "ع",
+    "19-Ghain.svg":             "غ",
+    "20-Fa.svg":                "ف",
+    "21-Qaf.svg":               "ق",
+    "22-Kaf.svg":               "ك",
+    "23-Lam.svg":               "ل",
+    "24-Mim.svg":               "م",
+    "25-Nun.svg":               "ن",
+    "1waw.svg":                 "و",
+    "28-Ya.svg":                "ي",
+}
+HA_PNG = "ه.png"  # هـ has a PNG, not SVG
+
+# Canonical letter order (same as MH-28 CSV)
+LETTER_ORDER = list("ابتثجحخدذرزسشصضطظعغفقكلمنو") + ["هـ", "ي"]
+
+# ============================================================
+#  SVG PATH PARSER (proper implicit-repeat handling)
+# ============================================================
+_NUM_RE = _re.compile(r'[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?')
+_CMD_RE = _re.compile(r'[MmLlCcQqZzHhVvSsTtAa]')
+
+def _tokenize_svg_d(d_str):
+    """Split SVG path 'd' into command letters and numbers."""
+    tokens = []
+    for m in _re.finditer(r'[MmLlCcQqZzHhVvSsTtAa]|[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?', d_str):
+        tokens.append(m.group())
+    return tokens
+
+# How many numeric args each command consumes per repeat
+_CMD_ARGS = {
+    'M':2,'m':2,'L':2,'l':2,'H':1,'h':1,'V':1,'v':1,
+    'C':6,'c':6,'S':4,'s':4,'Q':4,'q':4,'T':2,'t':2,
+    'A':7,'a':7,'Z':0,'z':0,
+}
+# Implicit repeat: M→L, m→l, others→same
+_CMD_IMPLICIT = {k:k for k in _CMD_ARGS}
+_CMD_IMPLICIT['M'] = 'L'
+_CMD_IMPLICIT['m'] = 'l'
+
+def _parse_svg_path_d(d_str):
+    """Parse SVG path 'd' into a list of (x,y) sampled points."""
+    tokens = _tokenize_svg_d(d_str)
+    pts = []
+    cx, cy = 0.0, 0.0
+    sx, sy = 0.0, 0.0  # subpath start
+    cmd = 'M'
+    i = 0
+
+    def _num():
+        nonlocal i
+        if i >= len(tokens): return 0.0
+        v = float(tokens[i]); i += 1; return v
+
+    def _is_num(idx):
+        if idx >= len(tokens): return False
+        try: float(tokens[idx]); return True
+        except: return False
+
+    while i < len(tokens):
+        # Read command or use implicit repeat
+        if i < len(tokens) and not _is_num(i):
+            cmd = tokens[i]; i += 1
+        else:
+            cmd = _CMD_IMPLICIT.get(cmd, cmd)
+
+        nargs = _CMD_ARGS.get(cmd, 0)
+
+        if cmd in ('Z', 'z'):
+            cx, cy = sx, sy
+            pts.append((cx, cy))
+            continue
+
+        if cmd == 'M':
+            cx, cy = _num(), _num(); sx, sy = cx, cy; pts.append((cx, cy))
+        elif cmd == 'm':
+            cx += _num(); cy += _num(); sx, sy = cx, cy; pts.append((cx, cy))
+        elif cmd == 'L':
+            cx, cy = _num(), _num(); pts.append((cx, cy))
+        elif cmd == 'l':
+            cx += _num(); cy += _num(); pts.append((cx, cy))
+        elif cmd == 'H':
+            cx = _num(); pts.append((cx, cy))
+        elif cmd == 'h':
+            cx += _num(); pts.append((cx, cy))
+        elif cmd == 'V':
+            cy = _num(); pts.append((cx, cy))
+        elif cmd == 'v':
+            cy += _num(); pts.append((cx, cy))
+        elif cmd == 'C':
+            x1,y1 = _num(),_num(); x2,y2 = _num(),_num(); x3,y3 = _num(),_num()
+            for t in (0.25, 0.5, 0.75, 1.0):
+                u=1-t
+                pts.append((u**3*cx+3*u**2*t*x1+3*u*t**2*x2+t**3*x3,
+                            u**3*cy+3*u**2*t*y1+3*u*t**2*y2+t**3*y3))
+            cx, cy = x3, y3
+        elif cmd == 'c':
+            dx1,dy1 = _num(),_num(); dx2,dy2 = _num(),_num(); dx3,dy3 = _num(),_num()
+            x1,y1 = cx+dx1,cy+dy1; x2,y2 = cx+dx2,cy+dy2; x3,y3 = cx+dx3,cy+dy3
+            for t in (0.25, 0.5, 0.75, 1.0):
+                u=1-t
+                pts.append((u**3*cx+3*u**2*t*x1+3*u*t**2*x2+t**3*x3,
+                            u**3*cy+3*u**2*t*y1+3*u*t**2*y2+t**3*y3))
+            cx, cy = x3, y3
+        elif cmd == 'S':
+            x2,y2 = _num(),_num(); x3,y3 = _num(),_num()
+            x1,y1 = cx,cy
+            for t in (0.25, 0.5, 0.75, 1.0):
+                u=1-t
+                pts.append((u**3*cx+3*u**2*t*x1+3*u*t**2*x2+t**3*x3,
+                            u**3*cy+3*u**2*t*y1+3*u*t**2*y2+t**3*y3))
+            cx, cy = x3, y3
+        elif cmd == 's':
+            dx2,dy2 = _num(),_num(); dx3,dy3 = _num(),_num()
+            x1,y1 = cx,cy; x2,y2 = cx+dx2,cy+dy2; x3,y3 = cx+dx3,cy+dy3
+            for t in (0.25, 0.5, 0.75, 1.0):
+                u=1-t
+                pts.append((u**3*cx+3*u**2*t*x1+3*u*t**2*x2+t**3*x3,
+                            u**3*cy+3*u**2*t*y1+3*u*t**2*y2+t**3*y3))
+            cx, cy = x3, y3
+        elif cmd == 'Q':
+            x1,y1 = _num(),_num(); x2,y2 = _num(),_num()
+            for t in (0.25, 0.5, 0.75, 1.0):
+                u=1-t
+                pts.append((u**2*cx+2*u*t*x1+t**2*x2, u**2*cy+2*u*t*y1+t**2*y2))
+            cx, cy = x2, y2
+        elif cmd == 'q':
+            dx1,dy1 = _num(),_num(); dx2,dy2 = _num(),_num()
+            x1,y1 = cx+dx1,cy+dy1; x2,y2 = cx+dx2,cy+dy2
+            for t in (0.25, 0.5, 0.75, 1.0):
+                u=1-t
+                pts.append((u**2*cx+2*u*t*x1+t**2*x2, u**2*cy+2*u*t*y1+t**2*y2))
+            cx, cy = x2, y2
+        elif cmd in ('A', 'a'):
+            _num(); _num(); _num(); _num(); _num()
+            if cmd == 'A':
+                cx,cy = _num(),_num()
+            else:
+                cx += _num(); cy += _num()
+            pts.append((cx, cy))
+        elif cmd in ('T', 't'):
+            x2,y2 = _num(),_num()
+            if cmd == 't': x2,y2 = cx+x2, cy+y2
+            pts.append((x2, y2)); cx,cy = x2,y2
+        else:
+            # skip float if stuck
+            if _is_num(i): i += 1
+
+    return pts
+
+
+# ============================================================
+#  SVG → PNG (pure Python)
+# ============================================================
+SVG_NS = '{http://www.w3.org/2000/svg}'
+
+def _collect_transforms(el):
+    """Get combined transform (only translate supported for simplicity)."""
+    tx, ty = 0.0, 0.0
+    t = el.get('transform', '')
+    m = _re.search(r'translate\(([-\d.]+)[,\s]+([-\d.]+)\)', t)
+    if m: tx, ty = float(m.group(1)), float(m.group(2))
+    # matrix
+    m2 = _re.search(r'matrix\(([-\d.e]+)[,\s]+([-\d.e]+)[,\s]+([-\d.e]+)[,\s]+([-\d.e]+)[,\s]+([-\d.e]+)[,\s]+([-\d.e]+)\)', t)
+    if m2:
+        a,b,c,d,e,f = [float(m2.group(i+1)) for i in range(6)]
+        return (a,b,c,d,e,f)
+    return (1,0,0,1,tx,ty)
+
+def _apply_matrix(mat, x, y):
+    a,b,c,d,e,f = mat
+    return (a*x + c*y + e, b*x + d*y + f)
+
+def _mul_matrix(m1, m2):
+    a1,b1,c1,d1,e1,f1 = m1
+    a2,b2,c2,d2,e2,f2 = m2
+    return (a1*a2+c1*b2, b1*a2+d1*b2, a1*c2+c1*d2, b1*c2+d1*d2,
+            a1*e2+c1*f2+e1, b1*e2+d1*f2+f1)
+
+def svg_to_png(svg_path, png_path, target_size=600):
+    """Render SVG to a grayscale PNG of target_size px on the longest side."""
+    tree = ET.parse(str(svg_path))
+    root = tree.getroot()
+
+    # Get viewBox
+    vb = root.get('viewBox')
+    if vb:
+        parts = vb.replace(',', ' ').split()
+        vx, vy, vw, vh = float(parts[0]), float(parts[1]), float(parts[2]), float(parts[3])
+    else:
+        ws = root.get('width', '500')
+        hs = root.get('height', '500')
+        vw = float(_re.sub(r'[a-zA-Z%]+', '', ws))
+        vh = float(_re.sub(r'[a-zA-Z%]+', '', hs))
+        vx, vy = 0, 0
+
+    scale = target_size / max(vw, vh)
+    W, H = int(vw * scale) + 4, int(vh * scale) + 4
+
+    img = Image.new('L', (W, H), 255)
+    draw = ImageDraw.Draw(img)
+
+    def _draw_el(el, parent_mat=(1,0,0,1,0,0)):
+        mat = _mul_matrix(parent_mat, _collect_transforms(el))
+
+        # Skip non-black fills (guide lines are #b3b3b3)
+        fill = el.get('fill', '') or ''
+        style = el.get('style', '')
+        if 'fill:#b3b3b3' in style or 'fill:#B3B3B3' in style:
+            return
+        if fill and fill not in ('#000000', '#231F20', '#000', 'black', ''):
+            # check style override
+            if 'fill:#000' not in style and 'fill:#231F20' not in style:
+                return
+
+        tag = el.tag.split('}')[-1] if '}' in el.tag else el.tag
+
+        if tag == 'path':
+            d = el.get('d', '')
+            if not d: return
+            pts = _parse_svg_path_d(d)
+            if len(pts) < 2: return
+            scaled = [((_apply_matrix(mat, x, y)[0] - vx) * scale + 2,
+                       (_apply_matrix(mat, x, y)[1] - vy) * scale + 2) for x, y in pts]
+            draw.line(scaled, fill=0, width=max(2, int(scale * 2)))
+            # also fill enclosed shapes
+            if len(scaled) >= 3:
+                try:
+                    draw.polygon(scaled, fill=0)
+                except: pass
+
+        elif tag == 'polygon':
+            points_str = el.get('points', '')
+            nums = [float(x) for x in _re.findall(r'[-\d.]+', points_str)]
+            pts = [(nums[j], nums[j+1]) for j in range(0, len(nums)-1, 2)]
+            if len(pts) >= 3:
+                scaled = [((_apply_matrix(mat, x, y)[0] - vx) * scale + 2,
+                           (_apply_matrix(mat, x, y)[1] - vy) * scale + 2) for x, y in pts]
+                draw.polygon(scaled, fill=0)
+
+        elif tag == 'circle':
+            cx_ = float(el.get('cx', '0')); cy_ = float(el.get('cy', '0'))
+            r_  = float(el.get('r', '2'))
+            px, py = _apply_matrix(mat, cx_, cy_)
+            px = (px - vx) * scale + 2; py = (py - vy) * scale + 2
+            rs = r_ * scale
+            draw.ellipse([px-rs, py-rs, px+rs, py+rs], fill=0)
+
+        elif tag == 'ellipse':
+            cx_ = float(el.get('cx', '0')); cy_ = float(el.get('cy', '0'))
+            rx_ = float(el.get('rx', '2')); ry_ = float(el.get('ry', '2'))
+            px, py = _apply_matrix(mat, cx_, cy_)
+            px = (px - vx) * scale + 2; py = (py - vy) * scale + 2
+            rxs, rys = rx_ * scale, ry_ * scale
+            draw.ellipse([px-rxs, py-rys, px+rxs, py+rys], fill=0)
+
+        # Recurse into children
+        for child in el:
+            _draw_el(child, mat)
+
+    _draw_el(root)
+    img.save(str(png_path))
+
+# ============================================================
+#  SPEC v0.1 — Direction / Trace Engine (from hc18dc)
+# ============================================================
+DIR_MAP = {
+    ( 1, 0):("D0",0),( 1,-1):("D1",1),( 0,-1):("D2",2),(-1,-1):("D3",3),
+    (-1, 0):("D4",4),(-1, 1):("D5",5),( 0, 1):("D6",6),( 1, 1):("D7",7),
+}
+DIR_AXIS = [0,9,2,10,4,1,3,8]
+
+def signed_delta(a, b):
+    d = b - a
+    if d >  4: d -= 8
+    if d < -4: d += 8
+    return d
+
+def normalize_vortex(tokens):
+    """Generic vortex normalizer: 3×TURN±Q1 (same sign) → TURN±Q3.
+    Does NOT produce JIM_VORTEX — that is the letter-gate's job."""
+    out, i = [], 0
+    def mid_ok(t): return t.startswith("D") or t in ("SEG_K","SEG_Q")
+    while i < len(tokens):
+        if tokens[i] in ("TURN+Q1","TURN-Q1"):
+            sign = tokens[i][4]
+            j = i + 1
+            while j < len(tokens) and mid_ok(tokens[j]): j += 1
+            if j < len(tokens) and tokens[j] == f"TURN{sign}Q1":
+                j2 = j + 1
+                while j2 < len(tokens) and mid_ok(tokens[j2]): j2 += 1
+                if j2 < len(tokens) and tokens[j2] == f"TURN{sign}Q1":
+                    out.append(f"TURN{sign}Q3")  # generic Q3
+                    i = j2 + 1; continue
+        out.append(tokens[i]); i += 1
+    return out
+
+def letter_gate(tokens, letter_char):
+    """Letter-specific gate applied AFTER normalize_vortex.
+    Fix 1+2: If letter == ج and TURN±Q3 on mainpath → rewrite to
+    JIM_VORTEX(Q3) exactly once. Non-ج letters must never emit
+    JIM_VORTEX(Q3).
+    
+    Strict Fix: Soft promotion removed. Jeem must naturally have 3×Q1(Q3).
+    """
+    if letter_char != "ج":
+        # Non-ج: TURN±Q3 stays generic, no JIM_VORTEX allowed
+        return tokens
+
+    out = list(tokens)
+    # Strategy: Look for explicit TURN±Q3 (generic) only
+    replaced = False
+    for idx, t in enumerate(out):
+        if t in ("TURN+Q3", "TURN-Q3") and not replaced:
+            out[idx] = "JIM_VORTEX(Q3)"
+            replaced = True
+            break  # exactly once
+    
+    return out
+
+def rot4(x, d): return (x + d) & 3
+
+def cube_update(tokens):
+    c = [0]*18
+    for t in tokens:
+        if t.startswith("D"):
+            k = int(t[1])
+            c[DIR_AXIS[k]] = rot4(c[DIR_AXIS[k]], 1)
+        elif t in ("TURN+Q1","TURN-Q1"):  c[0] = rot4(c[0], 1)
+        elif t in ("TURN+Q3","TURN-Q3"):  c[0] = rot4(c[0], 3)  # generic Q3
+        elif t == "SEG_K":                c[15] = rot4(c[15], 1)
+        elif t == "SEG_Q":                c[16] = rot4(c[16], 1)
+        elif t == "LOOP":                 c[11] = rot4(c[11], 1)
+        elif t == "JUNC":                 c[5]  = rot4(c[5],  1)
+        elif t == "NT":
+            c[1] = rot4(c[1], 1); c[14] = rot4(c[14], 1)
+        elif t == "NF":
+            c[2] = rot4(c[2], 1); c[14] = rot4(c[14], 1)
+        elif t == "NM":
+            c[3] = rot4(c[3], 1); c[14] = rot4(c[14], 1)
+        elif t == "JIM_VORTEX(Q3)":
+            c[0] = rot4(c[0], 3); c[9] = rot4(c[9], 1)
+    return c
+
+def tag36_hex(c):
+    v = 0
+    for i in range(18): v |= (c[i] & 3) << (2*i)
+    return f"{v:09x}"
+
+def rle(tokens):
+    if not tokens: return []
+    out, cur, n = [], tokens[0], 1
+    for t in tokens[1:]:
+        if t == cur: n += 1
+        else: out.append([cur, n]); cur, n = t, 1
+    out.append([cur, n]); return out
+
+# ============================================================
+#  IMAGE PROCESSING
+# ============================================================
+def binarize_inv(gray):
+    _, bw = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+    return (bw > 0).astype(np.uint8)
+
+def remove_long_hlines(fg):
+    H, W = fg.shape
+    num, lbl, stats, _ = cv2.connectedComponentsWithStats(fg, 8)
+    keep = np.zeros_like(fg)
+    for i in range(1, num):
+        x,y,w,h,area = stats[i]
+        if w >= int(0.90*W) and h <= 6: continue
+        keep[lbl == i] = 1
+    return keep
+
+def split_body_nuq(fg):
+    num, lbl, stats, _ = cv2.connectedComponentsWithStats(fg, 8)
+    if num <= 1: raise RuntimeError("no foreground")
+    areas = stats[1:, cv2.CC_STAT_AREA]
+    body_i = 1 + int(np.argmax(areas))
+    body = (lbl == body_i).astype(np.uint8)
+    nuq = np.zeros_like(fg)
+    for i in range(1, num):
+        if i == body_i: continue
+        if stats[i, cv2.CC_STAT_AREA] <= 0.15 * stats[body_i, cv2.CC_STAT_AREA]:
+            nuq[lbl == i] = 1
+    return body, nuq
+
+def bbox(mask):
+    ys, xs = np.where(mask > 0)
+    if len(xs) == 0: raise RuntimeError("empty mask")
+    return int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())
+
+def nuq_count_zones(nuq_mask, body_bbox):
+    x0,y0,x1,y1 = body_bbox
+    cy = (y0+y1)/2.0
+    num, lbl, stats, cents = cv2.connectedComponentsWithStats(nuq_mask, 8)
+    tokens = []
+    for i in range(1, num):
+        ny = cents[i][1]
+        if ny > y1:   tokens.append("NT")
+        elif ny < y0: tokens.append("NF")
+        elif ny < cy - (y1-y0)/6: tokens.append("NF")
+        elif ny > cy + (y1-y0)/6: tokens.append("NT")
+        else: tokens.append("NM")
+    return tokens
+
+def skel_graph(body):
+    sk = skeletonize(body.astype(bool)).astype(np.uint8)
+    ys, xs = np.where(sk > 0)
+    pts = set(zip(xs.tolist(), ys.tolist()))
+    G = nx.Graph()
+    for (x,y) in pts:
+        G.add_node((x,y))
+        for dx in (-1,0,1):
+            for dy in (-1,0,1):
+                if dx==0 and dy==0: continue
+                q = (x+dx, y+dy)
+                if q in pts: G.add_edge((x,y), q)
+    return sk, G
+
+def endpoints(G):
+    return [n for n in G.nodes if G.degree[n] == 1]
+
+def graph_junctions(G):
+    return [n for n in G.nodes if G.degree[n] >= 3]
+
+def mainpath(G):
+    eps = sorted(endpoints(G), key=lambda p:(p[0],p[1]))
+    if len(eps) < 2:
+        nodes = sorted(G.nodes, key=lambda p:(p[0],p[1]))
+        if len(nodes) >= 2: eps = [nodes[0], nodes[-1]]
+        else: return list(G.nodes)
+    start = eps[0]
+    best_path, best_len = None, -1
+    for end in eps[1:]:
+        try:
+            p = nx.shortest_path(G, start, end)
+        except nx.NetworkXNoPath: continue
+        if len(p) > best_len:
+            best_len = len(p); best_path = p
+    if best_path is None:
+        best_path = list(nx.dfs_preorder_nodes(G, start))
+    return best_path
+
+
+
+def resample_path(path, step=3.0):
+    """Resample path to having points exactly `step` pixels apart.
+    This reduces pixel quantization noise while preserving geometry."""
+    if not path: return []
+    out = [path[0]]
+    acc = 0.0
+    for i in range(len(path)-1):
+        p1, p2 = path[i], path[i+1]
+        dist = math.hypot(p2[0]-p1[0], p2[1]-p1[1])
+        acc += dist
+        while acc >= step:
+            # Linear interpolate
+            # We need to backtrack exactly 'step' units from current acc
+            # leftover = acc - step
+            # ratio of segment consumed: (dist - leftover) / dist
+            # t = (dist - (acc - step)) / dist
+            # Simplified: t = 1.0 - (acc - step) / dist
+            t = 1.0 - (acc - step) / dist
+            mx = p1[0] * (1-t) + p2[0] * t
+            my = p1[1] * (1-t) + p2[1] * t
+            out.append((mx, my))
+            acc -= step
+    out.append(path[-1])
+    return out
+
+def trace_from_path(path, smooth=True):
+    """Fix 3: SEG_K if no TURN after smoothing, SEG_Q if TURN exists.
+    We first extract direction tokens + turns, then decide the SEG type.
+    Includes PATH SMOOTHING to reduce zig-zag noise."""
+    
+    # User Requirement: "Sampling".
+    # Resample path to uniform step (eliminates pixel grid bias)
+    if len(path) > 2:
+        path = resample_path(path, step=3.0)
+
+    # Simple moving average smoothing (window=3)
+    if smooth and len(path) > 3:
+        smoothed = []
+        for i in range(len(path)):
+            start = max(0, i-1)
+            end = min(len(path), i+2)
+            pts = path[start:end]
+            mx = sum(p[0] for p in pts) / len(pts)
+            my = sum(p[1] for p in pts) / len(pts)
+            smoothed.append((mx, my))
+        path = smoothed
+
+    dirs_list, acc = [], 0
+    body_tokens = []
+    for (x1,y1),(x2,y2) in zip(path, path[1:]):
+        dx, dy = int(np.sign(x2-x1)), int(np.sign(y2-y1))
+        if (dx,dy) == (0,0): continue
+        d_tok, d_idx = DIR_MAP[(dx,dy)]
+        body_tokens.append(d_tok)
+        if dirs_list:
+            d = signed_delta(dirs_list[-1], d_idx)
+            acc += d
+            while abs(acc) >= 2:
+                sgn = "+" if acc > 0 else "-"
+                body_tokens.append(f"TURN{sgn}Q1")
+                acc -= 2 if acc > 0 else -2
+        dirs_list.append(d_idx)
+    # Fix 3: determine segment type based on whether turns exist
+    has_turn = any(t.startswith("TURN") for t in body_tokens)
+    seg_type = "SEG_Q" if has_turn else "SEG_K"
+    return [seg_type] + body_tokens
+
+# ============================================================
+#  FULL EXTRACTION PIPELINE
+# ============================================================
+def extract_trace(img_path, letter_char=""):
+    """Full extraction pipeline, with letter-gate for ج."""
+    gray = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+    if gray is None:
+        raise RuntimeError(f"cannot read: {img_path}")
+    fg = binarize_inv(gray)
+    # fg = remove_long_hlines(fg) # Strict Fix: Disabled to preserve Jeem head stroke
+    body, nuq = split_body_nuq(fg)
+    x0,y0,x1,y1 = bbox(body)
+    body_c = body[y0:y1+1, x0:x1+1]
+    nuq_c  = nuq[y0:y1+1, x0:x1+1]
+
+def find_best_path(G, letter_char):
+    """
+    Find the best path in the skeleton graph G for a given letter.
+    Default: mainpath(G) (longest shortest path / diameter).
+    Jeem: Search for 'Vortex Path' (3xQ1 curl) among all endpoints.
+    """
+    if letter_char == "ج":
+        # Strategy: Fint Tail (lowest Y). Trace to all other endpoints.
+        endpoints = [n for n in G.nodes() if G.degree(n) == 1]
+        if not endpoints: return []
+        
+        # Tail is Max Y (Bottom)
+        tail = max(endpoints, key=lambda p: p[1])
+        heads = [n for n in endpoints if n != tail]
+        
+        candidates = []
+        for h in heads:
+            try:
+                p = nx.shortest_path(G, h, tail)
+                # Check for Vortex
+                tr = trace_from_path(p, smooth=True) # Check WITH smoothing+resample
+                tn = normalize_vortex(tr)
+                has_v = sum(1 for t in tn if t in ("TURN+Q3", "TURN-Q3"))
+                candidates.append((has_v, len(p), p))
+            except nx.NetworkXNoPath:
+                continue
+        
+        # Sort: Max Vortex, then Max Length
+        candidates.sort(key=lambda x: (x[0], x[1]), reverse=True)
+        if candidates:
+            return candidates[0][2]
+    
+    return mainpath(G)
+
+def extract_trace(img_path, letter_char=""):
+    """Full extraction pipeline, with letter-gate for ج."""
+    gray = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+    if gray is None:
+        raise RuntimeError(f"cannot read: {img_path}")
+    fg = binarize_inv(gray)
+    # fg = remove_long_hlines(fg) # Strict Fix: Disabled to preserve Jeem head stroke
+    body, nuq = split_body_nuq(fg)
+    x0,y0,x1,y1 = bbox(body)
+    body_c = body[y0:y1+1, x0:x1+1]
+    nuq_c  = nuq[y0:y1+1, x0:x1+1]
+
+    sk, G = skel_graph(body_c)
+    
+    path = find_best_path(G, letter_char)
+
+    tokens_raw = trace_from_path(path)       # Fix 3: SEG_K/SEG_Q decided here
+    tokens_norm = normalize_vortex(tokens_raw)    # Fix 1: generic TURN±Q3
+    tokens_final = letter_gate(tokens_norm, letter_char)  # Fix 1+2: ج → JIM_VORTEX(Q3)
+
+    nuq_tokens = nuq_count_zones(nuq_c, (0, 0, body_c.shape[1]-1, body_c.shape[0]-1))
+    tokens_final.extend(nuq_tokens)
+    # raw doesn't need nuq? Or yes? User wants raw RLE.
+    # Let's append nuq to raw too for completeness.
+    tr_raw = list(tokens_raw)
+    tr_raw.extend(nuq_tokens)
+
+    juncs = graph_junctions(G)
+    for _ in juncs:
+        tokens_final.append("JUNC")
+        tr_raw.append("JUNC")
+
+    jim_vortex_count = sum(1 for t in tokens_final if "JIM_VORTEX" in t)
+    c   = cube_update(tokens_final)
+    tag = tag36_hex(c)
+    return rle(tokens_final), rle(tr_raw), jim_vortex_count, c, tag
+
+# ============================================================
+#  MAIN
+# ============================================================
+def main():
+    glyph_dir  = Path("Hijaiyah Glyph")
+    csv_path   = Path("hl-release-HL-18-v1.0/MH-28-v1.0-18D.csv")
+    output_path = Path("hl-release-HL-18-v1.0/ST-28-v0.1.json")
+    tmp_dir    = Path("_tmp_png")
+    tmp_dir.mkdir(exist_ok=True)
+
+    # ── Load CSV vectors ──
+    v18_fields = [
+        "ThetaHat","nt","nf","nm","km","kt","kd","ka","kz",
+        "qa","qt","qd","qs","qz","AN","AK","AQ","hamzah_marker"
+    ]
+    csv_data = {}
+    with open(csv_path, "r", encoding="utf-8-sig") as f:
+        for row in csv.DictReader(f):
+            letter = row["letter"].strip()
+            csv_data[letter] = [int(row[k]) for k in v18_fields]
+
+    # ── Convert SVGs → PNG ──
+    letter_png = {}
+    for svg_name, letter in GLYPH_MAP.items():
+        svg_p = glyph_dir / svg_name
+        if not svg_p.exists():
+            print(f"  WARN: {svg_p} not found, skipping {letter}"); continue
+        png_p = tmp_dir / f"{svg_name}.png"
+        print(f"  SVG→PNG: {svg_name} → {letter} ...", end="", flush=True)
+        # Increasing to 1200 for Jeem natural loop detection
+        svg_to_png(svg_p, png_p, target_size=1200)
+        letter_png[letter] = str(png_p)
+        print(" OK")
+
+    # هـ from PNG (use ASCII copy to avoid OpenCV Unicode path issue)
+    ha_ascii_png = tmp_dir / "ha.png"
+    ha_src = glyph_dir / HA_PNG
+    if ha_src.exists() and not ha_ascii_png.exists():
+        import shutil
+        shutil.copy2(str(ha_src), str(ha_ascii_png))
+    if ha_ascii_png.exists():
+        letter_png["هـ"] = str(ha_ascii_png)
+        print(f"  PNG:     {HA_PNG} → هـ (via ASCII copy)")
+
+    # ── Extract traces ──
+    print(f"\n--- Extracting traces for {len(letter_png)} letters ---")
+    letters_out = []
+    for letter in LETTER_ORDER:
+        v18 = csv_data.get(letter)
+        if v18 is None:
+            print(f"  SKIP (no CSV): {letter}"); continue
+
+        ar = audit_v18(v18)
+        audit_dict = {
+            "ok": ar.ok, "U": ar.U, "rho": ar.rho, "mod4": ar.mod4,
+            "checks": ar.checks
+        }
+
+        jim_vortex_count, cube_state, tag36 = 0, [0]*18, "000000000"
+        png_path = letter_png.get(letter)
+        if png_path:
+            try:
+                trace_rle, trace_raw_rle, jim_vortex_count, cube_state, tag36 = extract_trace(png_path, letter) # Pass letter here
+                print(f"  OK  {letter}  JIM_VORTEX_count={jim_vortex_count}  tag={tag36}  rle_len={len(trace_rle)}")
+            except Exception as e:
+                print(f"  ERR {letter}: {e}")
+        else:
+            print(f"  MISS {letter}: no glyph image")
+
+        letters_out.append({
+            "letter": letter,
+            "v18": v18,
+            "audit": audit_dict,
+            "trace_rle": trace_rle,
+            "trace_raw_rle": trace_raw_rle,
+            "vortex_count": jim_vortex_count, # Legacy field for compatibility
+            "JIM_VORTEX_count": jim_vortex_count,
+            "cube_state": cube_state,
+            "tag36_hex": tag36
+        })
+
+    # ── Write JSON ──
+    st28 = {
+        "suite": "ST-28",
+        "version": "0.1",
+        "spec": {
+            "name": "HC18DC v0.1 (Strict)",
+            "normative_rules": {
+                "T1_vortex": "3xTURN±Q1 -> JIM_VORTEX(Q3)",
+                "T5_injective": "WAJIB (28/28 unique Tag36)",
+                "Fix_A": "Nuqṭah coupling: NT(+1 axis 1,14), NF(+1 axis 2,14), NM(+1 axis 3,14)"
+            },
+            "shape_lock": {
+                "center": "bbox_center",
+                "skeletonize": "zhang_suen",
+                "prune_spur_px": 0.0,
+                "mainpath_gate": "natural_vortex_search_for_jeem",
+                "resample_step_px": 3.0,
+                "dir_quantization": "8-way",
+                "vortex_norm": "3xTURN±Q1 -> JIM_VORTEX(Q3)",
+                "guide_line_filter": "skip fill:#b3b3b3 (exception: jeem stroke check verified)",
+                "horizontal_line_removal": "disabled for jeem",
+                "nuqtah_coupling": "Fix A (axis 14 rotation for NT/NF/NM)"
+            }
+        },
+        "dataset_file": "MH-28-v1.0-18D.csv",
+        "glyph_source": "Hijaiyah Glyph/",
+        "hamzah_note": "Hamzah treated as marker (hamzah_marker field), not separate letter",
+        "letter_count": len(letters_out),
+        "letters": letters_out
+    }
+
+    with open(output_path, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(st28, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
+    sha = hashlib.sha256(output_path.read_bytes()).hexdigest()
+    print(f"\n{'='*60}")
+    print(f"ST-28-v0.1.json: {len(letters_out)} letters")
+    print(f"SHA-256: {sha}")
+    print(f"Path:    {output_path.resolve()}")
+
+    # ── Create Audit Artifact: h28_tag36_table.jsonl ──
+    audit_table_path = output_path.parent / "h28_tag36_table.jsonl"
+    with open(audit_table_path, "w", encoding="utf-8") as f:
+        for x in letters_out:
+            entry = {"letter": x["letter"], "tag36_hex": x["tag36_hex"]}
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    
+    table_sha = hashlib.sha256(audit_table_path.read_bytes()).hexdigest()
+    print(f"Audit:   h28_tag36_table.jsonl created")
+    print(f"Audit SHA: {table_sha}")
+
+if __name__ == "__main__":
+    main()

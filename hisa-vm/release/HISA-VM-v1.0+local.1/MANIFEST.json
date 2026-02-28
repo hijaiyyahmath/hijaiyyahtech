@@ -1,0 +1,40 @@
+{
+  "release_id": "HISA-VM-v1.0+local.1",
+  "entries": [
+    {
+      "path": "bytecode/audit_jim.bin",
+      "size": 16,
+      "sha256": "f6c5ff117b8ee909b33e7d11f79cef2dd06724b771e11263b4031c5d377bb483"
+    },
+    {
+      "path": "data/HIJAIYYAH_28.txt",
+      "size": 85,
+      "sha256": "524ab1e1926f617683f0704e2307bffe07d0d80a6a569e2f629d3491806c0ad8"
+    },
+    {
+      "path": "data/MH-28-v1.0-18D.csv",
+      "size": 1539,
+      "sha256": "6020188a7929ddf6231ac2f61c96ac0007761f8d0512dd7ce2ffd2ec018f12bd"
+    },
+    {
+      "path": "spec/HISA_BYTECODE_ENCODING.md",
+      "size": 1031,
+      "sha256": "bcb9ab53259c2c5c1908470f46716a2a0052281673bbf7658a796a6998e5dec9"
+    },
+    {
+      "path": "spec/HISA_ISA_TABLE.md",
+      "size": 1540,
+      "sha256": "ec4733e57fbc1e9ca0c47dc26806223628cd88979794a4edfada261af153225c"
+    },
+    {
+      "path": "spec/HISA_TRAP_CONFORMANCE.md",
+      "size": 1389,
+      "sha256": "850bae0cb5f799638076d264c4acdc7e8fdcbbee2f89bcb242b1d6826aa5c9a2"
+    },
+    {
+      "path": "spec/HISA_v1_0.md",
+      "size": 1592,
+      "sha256": "c20d5ee9ab1c107fa8eab363a6365fb2c532e3170fce456f3c1112bdafb744aa"
+    }
+  ]
+}

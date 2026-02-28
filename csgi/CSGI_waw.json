@@ -1,0 +1,298 @@
+{
+    "csgi_version": "CSGI-1.0",
+    "letter": "و",
+    "embedding": {
+        "coord_system": "raster",
+        "axis_convention": "x_right_y_down",
+        "units": "px",
+        "bbox_body": [
+            20,
+            14,
+            32,
+            28
+        ],
+        "resolution": [
+            64,
+            64
+        ],
+        "origin": [
+            0,
+            0
+        ]
+    },
+    "nodes": [
+        {
+            "id": 1,
+            "x": 20,
+            "y": 14,
+            "kind": "kink",
+            "degree": 2
+        },
+        {
+            "id": 2,
+            "x": 26,
+            "y": 14,
+            "kind": "junction",
+            "degree": 3
+        },
+        {
+            "id": 3,
+            "x": 26,
+            "y": 18,
+            "kind": "kink",
+            "degree": 2
+        },
+        {
+            "id": 4,
+            "x": 20,
+            "y": 18,
+            "kind": "junction",
+            "degree": 3
+        },
+        {
+            "id": 5,
+            "x": 32,
+            "y": 14,
+            "kind": "endpoint",
+            "degree": 1
+        },
+        {
+            "id": 6,
+            "x": 30,
+            "y": 28,
+            "kind": "endpoint",
+            "degree": 1
+        }
+    ],
+    "edges": [
+        {
+            "id": 1,
+            "u": 1,
+            "v": 2,
+            "points": [
+                [
+                    20,
+                    14
+                ],
+                [
+                    21,
+                    14
+                ],
+                [
+                    22,
+                    14
+                ],
+                [
+                    23,
+                    14
+                ],
+                [
+                    24,
+                    14
+                ],
+                [
+                    25,
+                    14
+                ],
+                [
+                    26,
+                    14
+                ]
+            ]
+        },
+        {
+            "id": 2,
+            "u": 2,
+            "v": 3,
+            "points": [
+                [
+                    26,
+                    14
+                ],
+                [
+                    26,
+                    15
+                ],
+                [
+                    26,
+                    16
+                ],
+                [
+                    26,
+                    17
+                ],
+                [
+                    26,
+                    18
+                ]
+            ]
+        },
+        {
+            "id": 3,
+            "u": 3,
+            "v": 4,
+            "points": [
+                [
+                    26,
+                    18
+                ],
+                [
+                    25,
+                    18
+                ],
+                [
+                    24,
+                    18
+                ],
+                [
+                    23,
+                    18
+                ],
+                [
+                    22,
+                    18
+                ],
+                [
+                    21,
+                    18
+                ],
+                [
+                    20,
+                    18
+                ]
+            ]
+        },
+        {
+            "id": 4,
+            "u": 4,
+            "v": 1,
+            "points": [
+                [
+                    20,
+                    18
+                ],
+                [
+                    20,
+                    17
+                ],
+                [
+                    20,
+                    16
+                ],
+                [
+                    20,
+                    15
+                ],
+                [
+                    20,
+                    14
+                ]
+            ]
+        },
+        {
+            "id": 5,
+            "u": 2,
+            "v": 5,
+            "points": [
+                [
+                    26,
+                    14
+                ],
+                [
+                    27,
+                    14
+                ],
+                [
+                    28,
+                    14
+                ],
+                [
+                    29,
+                    14
+                ],
+                [
+                    30,
+                    14
+                ],
+                [
+                    31,
+                    14
+                ],
+                [
+                    32,
+                    14
+                ]
+            ]
+        },
+        {
+            "id": 6,
+            "u": 4,
+            "v": 6,
+            "points": [
+                [
+                    20,
+                    18
+                ],
+                [
+                    21,
+                    19
+                ],
+                [
+                    22,
+                    20
+                ],
+                [
+                    23,
+                    21
+                ],
+                [
+                    24,
+                    22
+                ],
+                [
+                    25,
+                    23
+                ],
+                [
+                    26,
+                    24
+                ],
+                [
+                    27,
+                    25
+                ],
+                [
+                    28,
+                    26
+                ],
+                [
+                    29,
+                    27
+                ],
+                [
+                    30,
+                    28
+                ]
+            ]
+        }
+    ],
+    "meta": {
+        "dataset_seal_id": "MH-28-v1.0-18D",
+        "source": "KFGQPC Mushaf Madinah Standard",
+        "pipeline_version": "EXAMPLE-ONLY",
+        "adjacency": "8-neighborhood",
+        "nuqṭah_excluded": true,
+        "audit": {
+            "theta_hat": 5,
+            "emb_key": "QA-WAW-HL18-V1.0",
+            "topology": "loop_not_closed",
+            "ranking": [
+                {
+                    "candidate": "Waw-Standard",
+                    "score": 1.0
+                }
+            ]
+        },
+        "notes": "Toy example: loop + two tails; no dots for و."
+    }
+}

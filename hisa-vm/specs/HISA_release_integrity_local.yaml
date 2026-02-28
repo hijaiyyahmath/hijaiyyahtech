@@ -1,0 +1,43 @@
+release_id: "HISA-VM-v1.0+local.1"
+tag: "hisa-vm-v1.0-local.1"
+dimension: 18
+
+encoding:
+  iw_format: "[opcode:8|Rd:4|Ra:4|Rb:4|subop:4|imm8:8]"
+  bit_positions:
+    opcode: "[31:24]"
+    rd: "[23:20]"
+    ra: "[19:16]"
+    rb: "[15:12]"
+    subop: "[11:8]"
+    imm8: "[7:0]"
+  stream_endianness: "little-endian-u32"
+
+normative_files:
+  - path: "data/MH-28-v1.0-18D.csv"
+    sha256: "6020188a7929ddf6231ac2f61c96ac0007761f8d0512dd7ce2ffd2ec018f12bd"
+  - path: "data/HIJAIYYAH_28.txt"
+    sha256: "524ab1e1926f617683f0704e2307bffe07d0d80a6a569e2f629d3491806c0ad8"
+  - path: "spec/HISA_v1_0.md"
+    sha256: "c20d5ee9ab1c107fa8eab363a6365fb2c532e3170fce456f3c1112bdafb744aa"
+  - path: "spec/HISA_ISA_TABLE.md"
+    sha256: "ec4733e57fbc1e9ca0c47dc26806223628cd88979794a4edfada261af153225c"
+  - path: "spec/HISA_BYTECODE_ENCODING.md"
+    sha256: "bcb9ab53259c2c5c1908470f46716a2a0052281673bbf7658a796a6998e5dec9"
+  - path: "spec/HISA_TRAP_CONFORMANCE.md"
+    sha256: "850bae0cb5f799638076d264c4acdc7e8fdcbbee2f89bcb242b1d6826aa5c9a2"
+  - path: "examples/audit_jim.hisaasm"
+    sha256: "52bf3ce864da38796c764f6b7a0a17ec11cdb41c5b8c264b90aff6a7dc939898"
+
+release_tree:
+  base_dir: "release/HISA-VM-v1.0+local.1"
+  require_manifest: true
+  manifest_path: "MANIFEST.json"
+
+semantic_checks:
+  - "master_load_strict_formulas"
+  - "hij28_len_28_unique"
+  - "demo_audit_jim_halts"
+
+notes:
+  - "This spec locks local artifacts for forensic consistency."

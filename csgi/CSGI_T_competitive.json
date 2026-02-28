@@ -1,0 +1,215 @@
+{
+    "csgi_version": "CSGI-1.0",
+    "expected_winner": "1-2-5-4-3-7",
+    "letter": "ف",
+    "embedding": {
+        "coord_system": "raster",
+        "axis_convention": "x_right_y_down",
+        "units": "px",
+        "bbox_body": [
+            -2,
+            -2,
+            4,
+            2
+        ],
+        "resolution": [
+            32,
+            32
+        ],
+        "origin": [
+            0,
+            0
+        ]
+    },
+    "nodes": [
+        {
+            "id": 1,
+            "x": -2,
+            "y": 0,
+            "kind": "endpoint",
+            "degree": 1
+        },
+        {
+            "id": 2,
+            "x": 0,
+            "y": 0,
+            "kind": "junction",
+            "degree": 3
+        },
+        {
+            "id": 3,
+            "x": 2,
+            "y": 0,
+            "kind": "junction",
+            "degree": 3
+        },
+        {
+            "id": 4,
+            "x": 2,
+            "y": 2,
+            "kind": "junction",
+            "degree": 3
+        },
+        {
+            "id": 5,
+            "x": 0,
+            "y": 2,
+            "kind": "kink",
+            "degree": 2
+        },
+        {
+            "id": 6,
+            "x": 4,
+            "y": 2,
+            "kind": "endpoint",
+            "degree": 1
+        },
+        {
+            "id": 7,
+            "x": 2,
+            "y": -2,
+            "kind": "endpoint",
+            "degree": 1
+        }
+    ],
+    "edges": [
+        {
+            "id": 1,
+            "u": 1,
+            "v": 2,
+            "points": [
+                [
+                    -2,
+                    0
+                ],
+                [
+                    -1,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ]
+            ]
+        },
+        {
+            "id": 2,
+            "u": 2,
+            "v": 3,
+            "points": [
+                [
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    0
+                ],
+                [
+                    2,
+                    0
+                ]
+            ]
+        },
+        {
+            "id": 3,
+            "u": 3,
+            "v": 4,
+            "points": [
+                [
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    1
+                ],
+                [
+                    2,
+                    2
+                ]
+            ]
+        },
+        {
+            "id": 4,
+            "u": 4,
+            "v": 6,
+            "points": [
+                [
+                    2,
+                    2
+                ],
+                [
+                    3,
+                    2
+                ],
+                [
+                    4,
+                    2
+                ]
+            ]
+        },
+        {
+            "id": 5,
+            "u": 2,
+            "v": 5,
+            "points": [
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    2
+                ]
+            ]
+        },
+        {
+            "id": 6,
+            "u": 5,
+            "v": 4,
+            "points": [
+                [
+                    0,
+                    2
+                ],
+                [
+                    1,
+                    2
+                ],
+                [
+                    2,
+                    2
+                ]
+            ]
+        },
+        {
+            "id": 7,
+            "u": 3,
+            "v": 7,
+            "points": [
+                [
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    -1
+                ],
+                [
+                    2,
+                    -2
+                ]
+            ]
+        }
+    ],
+    "meta": {
+        "dataset_seal_id": "MH-28-v1.0-18D",
+        "adjacency": "8-neighborhood",
+        "notes": "Toy: square cycle A-B-C-D-A with a spur at B (T junction)."
+    }
+}

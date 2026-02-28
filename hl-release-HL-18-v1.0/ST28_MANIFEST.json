@@ -1,0 +1,54 @@
+{
+  "release": "ST-28-v0.1",
+  "timestamp": "2026-02-15T05:00:00Z",
+  "environment": {
+    "python_runtime": "3.11.8",
+    "libraries": {
+      "opencv-python": "4.11.0.86",
+      "scikit-image": "0.25.1",
+      "numpy": "2.2.3",
+      "networkx": "3.6.1",
+      "pillow": "12.1.1",
+      "rfc8785": "0.1.4"
+    }
+  },
+  "upstream_hl_dataset": {
+    "file": "MH-28-v1.0-18D.csv",
+    "sha256": "6020188a7929ddf6231ac2f61c96ac0007761f8d0512dd7ce2ffd2ec018f12bd"
+  },
+  "spec_lock": {
+    "digest_sha256": "0fa03453d405dd5d79c8bfc7e849ba508ebffba9b88912d91fb2537da6a8cc84",
+    "method": "sha256(RFC8785_Canonical(spec_block))"
+  },
+  "integrity": {
+    "generator_script": {
+      "file": "generate_st28_full.py",
+      "sha256": "151a7ddf39d809f82254a0ac18f3a19fd7d8f4a6445cd5e95397da878c6f2839"
+    },
+    "source_glyphs": {
+      "file": "HijaiyahGlyphPack.zip",
+      "sha256": "db969f4b051ac19366144dbc28ea3f9775c28805e892bf4bb37dc71958928353"
+    },
+    "validator_tool": {
+      "file": "validate_st28.py",
+      "sha256": "db94da718b481b95e23ef270845eb50963b70d969f6cdf76aea9e9f3dfb8c7fd"
+    },
+    "vortex_auditor": {
+      "file": "verify_vortex.py",
+      "sha256": "71bef26b0574c633fe5d5bdde8e19608482db16599db3a05ec9c0c19bbbe3ed2"
+    },
+    "verify_runner": {
+      "file": "verify_st28_release.py",
+      "sha256": "baf17ce1b6e89938bc6a9288688e9e42cc10ef25796ba9dc68c6f9ab97d9febb"
+    },
+    "output_dataset": {
+      "file": "ST-28-v0.1.json",
+      "sha256": "491bd7a4ba580a4bf418be8e58f112221b5c79ff263b03fe30fef6b7533d8fac"
+    },
+    "audit_table": {
+      "file": "h28_tag36_table.jsonl",
+      "sha256": "fd1c0f867bed7a5d0f2344e4128029055cdb442a8c43ecdf86504a6dbdf85816"
+    }
+  },
+  "manifest_sha256": "7442612d0fc97f1838fa09b9fef1785341e0a9de9677089727d01ed9123d16dd"
+}

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="338.66666mm"
+   height="200.02499mm"
+   viewBox="0 0 338.66666 200.02499"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="szablonlitera.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="893.12599"
+     inkscape:cy="194.78831"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(92.98214,-34.457741)">
+    <path
+       style="fill:#b3b3b3;fill-opacity:1;stroke-width:0.26303589"
+       d="m -92.98214,41.580959 h 338.63049 v 1.369757 H -92.98214 Z"
+       id="rect826" />
+    <path
+       style="fill:#b3b3b3;fill-opacity:1;stroke-width:0.26303589"
+       d="M -92.947418,73.293335 H 245.68307 v 1.369756 H -92.947418 Z"
+       id="rect826-0" />
+    <path
+       style="fill:#b3b3b3;fill-opacity:1;stroke-width:0.26303589"
+       d="M -92.952591,78.89444 H 245.6779 v 1.369756 H -92.952591 Z"
+       id="rect826-6" />
+    <path
+       style="fill:#b3b3b3;fill-opacity:1;stroke-width:0.26303589"
+       d="m -92.97438,189.83203 h 338.63049 v 1.36976 H -92.97438 Z"
+       id="rect826-5" />
+    <path
+       style="fill:#b3b3b3;fill-opacity:1;stroke-width:0.26303589"
+       d="m -92.96405,226.21471 h 338.63049 v 1.36975 H -92.96405 Z"
+       id="rect826-9" />
+    <g
+       aria-label="ج"
+       transform="matrix(0.26458333,0,0,0.26458333,-14.282503,31.291753)"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:426.66668701px;line-height:1;font-family:'Myriad Pro';-inkscape-font-specification:'Myriad Pro';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot817">
+      <path
+         d="M 400.78321,519.08954 374.4974,565.7855 325.94597,537.95347 349.75782,493.11298 Z M 311.10222,385.18655 q -6.1849,0 -17.9362,-0.92774 -11.7513,-0.92773 -17.62695,-0.92773 -19.79167,0 -44.53125,3.71094 -16.08073,2.47395 -43.91276,8.04036 12.36979,-34.94466 23.19336,-45.45898 23.19336,-22.88412 77.92969,-22.88412 20.41015,0 83.49609,8.65886 29.37825,4.02018 50.71614,4.02018 8.9681,0 26.28581,-2.16471 17.31771,-2.16472 25.97656,-2.16472 l -11.44206,52.26237 Q 398,398.48407 352.23178,412.70933 q -68.03386,21.02865 -106.07096,51.33464 -47.31446,37.72786 -47.31446,89.06249 0,66.48763 69.27084,99.88607 60.30273,29.06901 161.11653,29.06901 h 56.90104 l 1.85547,3.40169 -69.88933,49.16992 h -17.93619 q -66.79688,0 -111.01888,-12.36979 -52.88086,-14.84375 -80.0944,-47.6237 -30.92448,-37.41861 -30.92448,-98.95833 0,-51.95312 24.43034,-93.39192 18.55469,-31.54297 54.11784,-59.68424 10.82357,-8.65886 54.42708,-37.41862 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:633.33331299px;line-height:1;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, '"
+         id="path850" />
+    </g>
+  </g>
+</svg>

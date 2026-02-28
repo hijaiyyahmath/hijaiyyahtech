@@ -1,0 +1,26 @@
+release:
+  id: HCPU-AI-v1.0+local.1
+  isa_contract: HISA-v1.0
+  dimension: 18
+
+spec_files:
+  - spec/HCPU_AI_v1_0.md
+  - spec/HCPU_AI_MODES.md
+  - spec/HCPU_AI_TRAP_CONFORMANCE.md
+  - spec/HCPU_AI_RELEASE_LOCK.md
+
+tool_files:
+  - tools/hcpu_ai_demo.py
+  - tools/hcpu_ai_run.py
+  - tools/check_release_lock.py
+
+artifacts_expected:
+  - release/MANIFEST.json
+  - release/artifacts/demo_trace.jsonl
+  - release/artifacts/demo_report.json
+
+sha256:
+  spec/HCPU_AI_v1_0.md: "D924EB1E9F6047FCCA12469977456615F2815F630BDE20B90B90DB3DAA166169"
+  spec/HCPU_AI_MODES.md: "FFB8F85391D752172C95DA263C226A15C859DD40BC64758A198F3E59B4E03321"
+  spec/HCPU_AI_TRAP_CONFORMANCE.md: "E66773DBD48CE67194596F0EA95C72E1348020BD33699311CDE7C528F6E828AD"
+  spec/HCPU_AI_RELEASE_LOCK.md: "7250043A2498189DD80B4B3252315E9399D08AFE289FEA15950319414A8E2518"
