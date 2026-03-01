@@ -1,0 +1,3 @@
+[submodule "cmm18c"]
+	path = cmm18c
+	url = https://github.com/example/cmm18c.git
