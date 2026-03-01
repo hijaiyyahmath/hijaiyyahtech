@@ -2,6 +2,7 @@
 const nextConfig = {
     output: 'export',
     basePath: '/hijaiyyahmath.org',
+    assetPrefix: '/hijaiyyahmath.org/',
     trailingSlash: true,
     images: {
         unoptimized: true,
