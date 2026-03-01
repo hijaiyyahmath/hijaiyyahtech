@@ -1,16 +1,5 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+// Middleware is disabled for static export (output: 'export').
+// Root "/" redirect to "/en" is handled by a static index.html redirect page.
+// See: src/app/page.tsx
 
-export function middleware(req: NextRequest) {
-    const { pathname } = req.nextUrl;
-    if (pathname === "/") {
-        const url = req.nextUrl.clone();
-        url.pathname = "/en";
-        return NextResponse.redirect(url);
-    }
-    return NextResponse.next();
-}
-
-export const config = {
-    matcher: ["/"]
-};
+export { };

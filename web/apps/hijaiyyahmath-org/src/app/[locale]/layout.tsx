@@ -2,6 +2,10 @@ import "@/app/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+export function generateStaticParams() {
+    return [{ locale: "en" }];
+}
+
 export default function LocaleLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
