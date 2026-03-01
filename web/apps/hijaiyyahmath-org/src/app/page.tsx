@@ -1,6 +1,6 @@
 export const dynamic = "force-static";
 
-const BASE = "/hijaiyyahmath.org";
+const BASE = "/hijaiyyahtech";
 const TARGET = `${BASE}/en/`;
 
 export default function RootPage() {

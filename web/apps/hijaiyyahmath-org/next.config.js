@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: 'export',
-    basePath: '/hijaiyyahmath.org',
-    assetPrefix: '/hijaiyyahmath.org/',
+    basePath: '/hijaiyyahtech',
+    assetPrefix: '/hijaiyyahtech/',
     trailingSlash: true,
     images: {
         unoptimized: true,
