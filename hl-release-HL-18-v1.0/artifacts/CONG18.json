@@ -1,0 +1,9 @@
+{
+  "type": "HL.Congruences",
+  "hl_release_id": "HL-18-v1.0+local.1",
+  "dimension": 18,
+  "count": 0,
+  "modulus": null,
+  "congruences": [],
+  "semantics": "each row c enforces c·x ≡ 0 (mod modulus)"
+}

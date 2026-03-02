@@ -200,7 +200,7 @@
     "scripts/audit.ps1": "67b2c2204730091f198aae6b8273d2433cea0d5d2c5540e6beaaff04319642ce",
     "scripts/audit.sh": "2562dd8f5683fe5a55372650e0d62395a84e95adb5dd4683750b362b566c4c9f",
     "scripts/csgi_mainpath_select.py": "ad1b839184642dd787c82afab492dc8ac21e641598c6d8183b8adc896dbed6ae",
-    "scripts/run_full_demo.py": "163da8b67ace0b225f039344dcf752734855c54c6c6ae44faf2207d071c35879",
+    "scripts/run_full_demo.py": "eb6e4609d3d53e20f87787546111bc7e6a3fcbbdccde00fe06e36c445ad54c5d",
     "scripts/verify_all.py": "1c30b06d35b1cb359c0d0b45edf10462ac0af2ae086617e60c8779f31caecbe3",
     "scripts/verify_mh28_formulas.py": "978d9814d2fdcd26bf7ee27a9351dc3aaefa79dc8539bdb5a6ea92107806510a",
     "specs/HISA_integration_local.yaml": "4ee19bbca048a9bb33c12fe8039fc682494030cf92fa47bbc8151cc1f99d2c80",

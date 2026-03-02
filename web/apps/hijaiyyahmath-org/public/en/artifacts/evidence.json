@@ -1,0 +1,75 @@
+{
+  "event_type": "HGSS_HC18DC_TX",
+  "hgss_version": "HGSS-HCVM-v1.HC18DC",
+  "hcvm_version": "HGSS-HCVM-v1.HC18DC",
+  "git_hash": "e392c68",
+  "git_tag": "HGSS-HCVM-v1.HC18DC",
+  "timestamp_utc": "2026-02-26T15:38:40Z",
+  "environment_id": "audit-demo",
+  "service_id": "hcvm-runner",
+  "node_id_hex": "0202020202020202020202020202020202020202020202020202020202020202",
+  "mh28_sha256": "7393659dfe979cf85b1cf6293179f7ba1f49b4eedd1af19f002170148ce00380",
+  "csgi28_sha256": "530845fbc3815ea9f02c75d44bda0e1aa096ec93729942d24d2d8bb0bd56c9d5",
+  "dataset_lock_check": "PASS",
+  "key_id_hex": "0101010101010101010101010101010101010101010101010101010101010101",
+  "txid_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "txid_sha256": "e0e77a507412b120f6ede61f62295b1a7b2ff19d3dcc8f7253e51663470c888e",
+  "lease": {
+    "allocator_id": "range-lease-evidence-demo",
+    "lease_id": "LEASE-AUDIT-EXAMPLE-0001",
+    "prefix32": 2881301935,
+    "start_ctr": 10,
+    "end_ctr": 1000000,
+    "cur_ctr_at_issue": 10,
+    "issued_at": "2026-02-26T15:38:40Z",
+    "expires_at": "2026-02-27T15:38:40Z",
+    "lease_evidence_sha256": "43ca3e00bf794e1a463a218597379ca9bf995150fa0f6a23837ebf027c58f809"
+  },
+  "lease_sig": {
+    "sig_alg": "ES256",
+    "kid_hex": "617574682d64656d6f2d6b69642d3031",
+    "verified": "PASS",
+    "lease_token_sha256": "a17fe2d5182b30ed73d7c4edcc5761b59a053bd018097bcf7d6e44456b5e6a02",
+    "lease_payload_sha256": "43ca3e00bf794e1a463a218597379ca9bf995150fa0f6a23837ebf027c58f809"
+  },
+  "hsm": {
+    "provider": "pkcs11",
+    "handle": "DEMO-HSM-HANDLE-01",
+    "device_serial": "SN-DEMO-999",
+    "profile": "A",
+    "key_id_hex": "0101010101010101010101010101010101010101010101010101010101010101"
+  },
+  "nonce": {
+    "aead_alg": "AES-256-GCM",
+    "nonce96_hex": "af2dbdab0a00000000000000",
+    "nonce_prefix32": 2881301935,
+    "nonce_ctr64": 10,
+    "nonce_policy": "range_lease_prefix32_ctr64_v1",
+    "nonce_uniqueness_check": "PASS"
+  },
+  "aggregates": {
+    "vc1_agg_sha256": "dd703e741ff8877b44c1b032fb13c063a011e14131686eb5b7507326338a15bd",
+    "geo_agg_sha256": "276d38010b422caee26a494849e199a7b0a7c0bda4f011501e37be31d9006afb",
+    "aad_sha256": "f2175e68038249d1468c99dc8a49c9188ba9c02b0239b6060624364073bf34e5"
+  },
+  "commitment": {
+    "commit_alg": "SHA-256",
+    "commit_hex": "5cbbb2c988ce66ebfe156207d094c06f9bb0dc91fa77e7da11b40b331348c8e7"
+  },
+  "mac": {
+    "mac_alg": "HMAC-SHA256",
+    "mac_tag_hex": "e04ddc491cb2a1e44d60961849ad58cadfff2a56e63045d63349fe42f32ea3cb"
+  },
+  "ciphertext": {
+    "ciphertext_sha256": "0b170dae7692d964098b348ed2883ec9bee81e730a4df8d6980052cc2c942e7a",
+    "ciphertext_len": 701
+  },
+  "trace": {
+    "trace_sha256": "63717435d77bb16d2d3a76c010635ccf6575027b917b416d9c714692ad2a2363",
+    "trace_event_count": 31
+  },
+  "status": {
+    "state": "HALT",
+    "err_code": 0
+  }
+}

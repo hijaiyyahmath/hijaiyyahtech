@@ -1,0 +1,29 @@
+{
+  "hl_release_id": "HL-18-v1.0+local.1",
+  "dimension": 18,
+  "dataset_18d_sha256": "6020188a7929ddf6231ac2f61c96ac0007761f8d0512dd7ce2ffd2ec018f12bd",
+  "normaliz_out": "C:\\hijaiyyah-codex\\hl-release-HL-18-v1.0\\MH_18x28.out",
+  "metrics": {
+    "rank": 14,
+    "external_index": 1,
+    "internal_index": 2,
+    "integrally_closed": false,
+    "embedding_dimension": 18,
+    "hilbert_basis_size": 38,
+    "extreme_rays": 25,
+    "support_hyperplanes": 21,
+    "equations": 4,
+    "congruences": 0,
+    "congruence_modulus": null,
+    "lattice_basis_size": 14
+  },
+  "artifacts": {
+    "HB18.json": "f1f2b7b37e191660149b8941ea501cfa0fdb242dd680ad8f94e581f991b11e57",
+    "HYP18.json": "3c94eec62e1b4f1eacc43355d128ce6ad07c3efccd1b8c29ec67e870d12e7a7b",
+    "EQ18.json": "533f8871f519d43622aad361d32c62b46cf1134de49d9fd546e73f45f9501a14",
+    "CONG18.json": "1cc0a5b5e3ca85c2469ad453b1b921621b44f394045796b55d39509acac40d7a",
+    "LATTICE18.json": "e48da52ae4d9aecca95d909b393c910624471684aefc8aa8c4b67a7d8cd1e9a7",
+    "HB18.bin": "e11e242cc1bd3ad1f5636b417e0aa1a1f772437c5abbf55e8d1fe8c9d0205b66"
+  },
+  "notes": "Artifacts are tooling for HL (norm/valid). They do not define letters."
+}

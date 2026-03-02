@@ -17,6 +17,10 @@ export default async function DownloadsPage({ params }: { params: { locale: stri
 
             {bundles.map((b) => {
                 const anchor = bundleAnchorId(b);
+                const isLatest = b === bundles[0];
+                const tarUrl = isLatest ? `/${params.locale}/downloads/auditor-bundle` : b.tar_url;
+                const shaUrl = isLatest ? `/${params.locale}/downloads/sha256sums` : b.sha256sums_url;
+
                 return (
                     <section key={b.bundle_id} className={styles.card}>
                         <h2 className={styles.cardTitle}>{b.bundle_id}</h2>
@@ -27,8 +31,8 @@ export default async function DownloadsPage({ params }: { params: { locale: stri
                         </ul>
 
                         <div className={styles.actions}>
-                            <a className={styles.button} href={b.tar_url} download>Download .tar.gz</a>
-                            <a className={styles.buttonSecondary} href={b.sha256sums_url} download>SHA256SUMS.txt</a>
+                            <a className={styles.button} href={tarUrl}>Download .tar.gz</a>
+                            <a className={styles.buttonSecondary} href={shaUrl}>SHA256SUMS.txt</a>
                             <Link className={styles.buttonSecondary} href={`/${params.locale}/docs/auditor-quickstart#${anchor}`}>
                                 Quickstart
                             </Link>
