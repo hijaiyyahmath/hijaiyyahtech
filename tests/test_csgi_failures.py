@@ -4,7 +4,7 @@ import unittest
 
 # Add root directory to path to import validator
 sys.path.append(os.getcwd())
-from hijaiyyahlang.verify_release import validate_csgi_dataset
+from scripts.validation.verify_hl18_release import validate_csgi_dataset
 
 class TestCSGIFailures(unittest.TestCase):
     def run_fail_test(self, filename, expected_err):

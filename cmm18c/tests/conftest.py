@@ -1,6 +1,6 @@
 import pytest
 import os
-from src.cmm18c.master import load_master_csv
+from cmm18c.master import load_master_csv
 
 @pytest.fixture(scope="session")
 def master_fixture():

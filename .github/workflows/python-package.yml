@@ -27,10 +27,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest
+        python -m pip install flake8 pytest cryptography
         # Install sub-packages to resolve dependencies and setup paths
         pip install -e hisa-vm
         pip install -e hijaiyyahlang-hl18
+        pip install -e cmm18c
         pip install -e hgss-hc18dc
         pip install -e hijaiyyah-ai-hgss
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
@@ -42,13 +43,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        # Set PYTHONPATH to include all source directories for cross-package imports
-        export PYTHONPATH=$PYTHONPATH:$(pwd)/hisa-vm/src:$(pwd)/hijaiyyahlang-hl18/src:$(pwd)/hgss-hc18dc/src:$(pwd)/hijaiyyah-ai-hgss/src:$(pwd)/cmm18c/src:$(pwd)
-        
-        # Run tests in sub-packages to avoid name collisions between 'tests' folders
-        pytest hisa-vm/tests
-        pytest hijaiyyahlang-hl18/tests
-        pytest hgss-hc18dc/tests
-        pytest hijaiyyah-ai-hgss/tests || true # Allow optional failures in experimentals
-        pytest cmm18c/tests
-        pytest tests # Root tests
+        pytest
