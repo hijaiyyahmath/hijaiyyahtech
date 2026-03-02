@@ -53,7 +53,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add web/apps/hijaiyyahmath-org/public/releases/auditor_bundles.json
           git commit -m "docs: update auditor bundle manifest for $BUNDLE_ID" || echo "No changes to commit"
-          git push origin HEAD:main
+          git push origin HEAD:master
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v2
