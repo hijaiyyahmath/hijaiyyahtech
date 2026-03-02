@@ -1,19 +1,48 @@
-import { loadAuditorBundles } from "@/lib/auditorReleases";
+"use client";
 
-export default async function Sha256SumsRedirect() {
-    const bundles = await loadAuditorBundles();
-    const targetUrl = bundles.length > 0 ? bundles[0].sha256sums_url : "/en/downloads";
+import { useEffect, useState } from "react";
+
+export default function Sha256SumsRedirect() {
+    const [status, setStatus] = useState("Redirecting to GitHub Release...");
+
+    useEffect(() => {
+        async function doRedirect() {
+            try {
+                // Try fetching release metadata first
+                const res = await fetch("/hijaiyyahtech/releases/auditor_bundles.json", { cache: "no-store" });
+                if (res.ok) {
+                    const bundles = await res.json();
+                    if (bundles && bundles.length > 0) {
+                        window.location.href = bundles[0].sha256sums_url;
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch release metadata:", err);
+            }
+
+            // Fallback: direct to the latest known GitHub Release SHA256SUMS
+            const fallbackUrl = "https://github.com/hijaiyyahmath/hijaiyyahtech/releases/download/stack-v1.0/SHA256SUMS.txt";
+            window.location.href = fallbackUrl;
+        }
+
+        // Small delay to show loading state
+        const timer = setTimeout(doRedirect, 500);
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
-        <html>
-            <head>
-                <meta http-equiv="refresh" content={`0; url=${targetUrl}`} />
-                <title>Redirecting...</title>
-            </head>
-            <body style={{ backgroundColor: "black", color: "white", display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-                <p>Redirecting to SHA256SUMS...</p>
-                <script dangerouslySetInnerHTML={{ __html: `window.location.href = "${targetUrl}";` }} />
-            </body>
-        </html>
+        <div style={{ backgroundColor: "black", color: "white", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100vh", margin: 0, fontFamily: "sans-serif" }}>
+            <div style={{ textAlign: "center" }}>
+                <p style={{ fontSize: "1.2rem", marginBottom: "1rem" }}>{status}</p>
+                <div className="spinner" />
+                <style>
+                    {`
+                        .spinner { width: 30px; height: 30px; border: 3px solid #333; border-top: 3px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
+                        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+                    `}
+                </style>
+            </div>
+        </div>
     );
 }
