@@ -56,7 +56,7 @@ Normative reference:
 - mod‑4 geometric gate validation  
 - Dataset‑sealed execution  
 - Release integrity — artifacts locked by SHA‑256 and MANIFEST, verifiable offline  
-
+https://github.com/hijaiyyahmath/hijaiyyahtech/releases/tag/stack-v1.0
 ---
 
 ## Purpose of This Site
