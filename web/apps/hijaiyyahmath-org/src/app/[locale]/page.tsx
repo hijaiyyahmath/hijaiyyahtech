@@ -16,31 +16,92 @@ curl https://hijaiyyahmath.github.io/hijaiyyahtech/en/artifacts/evidence.json`;
 
     return (
         <div className="space-y-6">
-            <div className="grid gap-6 lg:grid-cols-2">
-                <div className="space-y-3">
-                    <h1 className="text-3xl font-bold">
-                        Matematika Hijaiyyah Technology Stack v1.0
-                    </h1>
-                    <p className="text-gray-700 dark:text-gray-300">
-                        A deterministic, audit-aware technology stack built from Hijaiyyah geometric codex (v18),
-                        spanning language, ISA, compute (silicon/photonic/qubit), AI harness, and optional security module (HGSS/HC18DC).
+            <div>
+                <h1 className="text-3xl font-bold mb-4">
+                    Matematika Hijaiyyah Technology Stack v1.0
+                </h1>
+                
+                <div className="prose dark:prose-invert max-w-none space-y-4 mb-6">
+                    <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                        Matematika Hijaiyyah Technology Stack v1.0 is a deterministic, audit‑grade computing framework built on a discrete geometric encoding of the canonical 28 Hijaiyyah letters. It defines a dataset‑sealed mathematical domain (H₂₈) and maps each letter to a canonical 18‑dimensional integer vector (v18) via HL‑18 (HijaiyahLang 18‑Dimensional). All computations are integer‑only and governed by explicit, checkable invariants.
                     </p>
-
-                    <div className="flex flex-wrap gap-2">
-                        <Link className="rounded-md bg-black px-3 py-2 text-sm text-white dark:bg-white dark:text-black" href={`/${params.locale}/stack`}>
-                            View Technology Stack
-                        </Link>
-                        <Link className="rounded-md border px-3 py-2 text-sm dark:border-gray-800" href={`/${params.locale}/tools/evidence-verifier`}>
-                            Evidence Verifier Tool
-                        </Link>
-                        <Link className="rounded-md border px-3 py-2 text-sm dark:border-gray-800" href={`/${params.locale}/releases`}>
-                            Release Matrix
-                        </Link>
+                    
+                    <div className="rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-6 space-y-4">
+                        <div>
+                            <h3 className="font-bold text-black dark:text-white mb-3">Stack Structure (Locked Terms)</h3>
+                            <div className="space-y-3 text-sm">
+                                <div>
+                                    <div className="font-semibold text-black dark:text-white">HL‑18 (HijaiyahLang 18‑Dimensional)</div>
+                                    <p className="text-gray-600 dark:text-gray-400 mt-1">Word‑to‑Vector engine (v18), canonical codex implementation, and mathematical audit layer.</p>
+                                    <p className="text-gray-500 dark:text-gray-500 mt-1 font-mono text-xs">Repo: hijaiyahlang-hl18/ | Verifier: <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">verify-hl18-release --spec specs/HL18_release_integrity_local.yaml --check-manifest</code></p>
+                                </div>
+                                <div>
+                                    <div className="font-semibold text-black dark:text-white">HISA (Hijaiyyah Instruction Set Architecture)</div>
+                                    <p className="text-gray-600 dark:text-gray-400 mt-1">Audit‑centric instruction architecture for executing codex operations.</p>
+                                    <p className="text-gray-500 dark:text-gray-500 mt-1 font-mono text-xs">Normative reference: cmm18c/spec/ISA_TABLE.md and hisa-vm/</p>
+                                </div>
+                                <div>
+                                    <div className="font-semibold text-black dark:text-white">HISA‑VM</div>
+                                    <p className="text-gray-600 dark:text-gray-400 mt-1">Deterministic virtual machine for executing HISA programs and enforcing invariant gates (fail‑closed).</p>
+                                </div>
+                                <div>
+                                    <div className="font-semibold text-black dark:text-white">HGSS‑HCVM‑v1.HC18DC</div>
+                                    <p className="text-gray-600 dark:text-gray-400 mt-1">Evidence‑grade security wrapper where HCVM runs the HGSS pipeline to produce the canonical HC18DC artifact.</p>
+                                    <p className="text-gray-500 dark:text-gray-500 mt-1 font-mono text-xs">Normative reference: hgss-hc18dc/spec/HCVM_ISA.md</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+                            <h3 className="font-bold text-black dark:text-white mb-2">Deterministic Composition (Words / Text)</h3>
+                            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Words are constructed as additive compositions of letter vectors:</p>
+                            <div className="bg-white dark:bg-gray-800 rounded p-3 font-mono text-sm text-center text-gray-800 dark:text-gray-300">
+                                Cod(w) = ∑v18
+                            </div>
+                            <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">ensuring deterministic and auditable aggregation.</p>
+                        </div>
+                    </div>
+                    
+                    <div className="rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-6">
+                        <h3 className="font-bold text-black dark:text-white mb-3">What the Stack Enforces (Audit Contract)</h3>
+                        <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
+                            <li className="flex items-start"><span className="mr-2 font-bold text-black dark:text-white">•</span>Dataset‑sealed execution (SHA‑256 + MANIFEST release integrity)</li>
+                            <li className="flex items-start"><span className="mr-2 font-bold text-black dark:text-white">•</span>Integer‑only computation</li>
+                            <li className="flex items-start"><span className="mr-2 font-bold text-black dark:text-white">•</span>CORE‑1 adjacency rule: SETFLAG → AUDIT</li>
+                            <li className="flex items-start"><span className="mr-2 font-bold text-black dark:text-white">•</span>mod‑4 geometric gate</li>
+                            <li className="flex items-start"><span className="mr-2 font-bold text-black dark:text-white">•</span>Fail‑closed behavior: invariant violations trigger TRAP/HALT</li>
+                        </ul>
+                    </div>
+                    
+                    <div className="rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-6">
+                        <h3 className="font-bold text-black dark:text-white mb-3">What This Website Provides</h3>
+                        <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
+                            <li className="flex items-start"><span className="mr-2 font-bold text-black dark:text-white">•</span>Release matrix and version locks</li>
+                            <li className="flex items-start"><span className="mr-2 font-bold text-black dark:text-white">•</span>Auditor Bundle downloads (offline‑ready)</li>
+                            <li className="flex items-start"><span className="mr-2 font-bold text-black dark:text-white">•</span>Deterministic verification guidance</li>
+                            <li className="flex items-start"><span className="mr-2 font-bold text-black dark:text-white">•</span>Evidence and artifact validation</li>
+                        </ul>
+                    </div>
+                    
+                    <div className="italic text-sm text-gray-600 dark:text-gray-400 border-l-4 border-gray-300 dark:border-gray-700 pl-4">
+                        Matematika Hijaiyyah is not a probabilistic model and not a symbolic interpretation system. It is a structured, deterministic, geometry‑based framework designed for reproducible audit‑grade computation.
                     </div>
                 </div>
 
-                <ReleaseBadge />
+                <div className="flex flex-wrap gap-2">
+                    <Link className="rounded-md bg-black px-3 py-2 text-sm text-white dark:bg-white dark:text-black" href={`/${params.locale}/stack`}>
+                        View Technology Stack
+                    </Link>
+                    <Link className="rounded-md border px-3 py-2 text-sm dark:border-gray-800" href={`/${params.locale}/tools/evidence-verifier`}>
+                        Evidence Verifier Tool
+                    </Link>
+                    <Link className="rounded-md border px-3 py-2 text-sm dark:border-gray-800" href={`/${params.locale}/releases`}>
+                        Release Matrix
+                    </Link>
+                </div>
             </div>
+
+            <ReleaseBadge />
 
             <HijaiyyahLetterRow />
 
