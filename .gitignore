@@ -9,7 +9,12 @@ build/
 dist/
 *.log
 _tmp_png/
+# ignore runtime artifacts
 artifacts/
+
+# BUT keep normative release artifacts inside HL-18 release (and bundle release)
+!release/**/artifacts/**
+!AuditorBundle/release/**/artifacts/**
 results/
 reports/
 tmp/

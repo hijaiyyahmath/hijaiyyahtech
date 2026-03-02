@@ -6,11 +6,28 @@ import hashlib
 import json
 import os
 import tarfile
+import shutil
 from pathlib import Path
 from typing import Dict, Iterable, Tuple
 
-EXCLUDE_DIRS = {".git", ".venv", "__pycache__", "node_modules", "dist", ".next"}
+EXCLUDE_TOPLEVEL = {
+    ".git", ".venv", "__pycache__", ".pytest_cache",
+    "node_modules", "dist", ".next", "out",
+}
 EXCLUDE_FILES = {".DS_Store"}
+
+def copy_tree_missing(src: Path, dst: Path) -> None:
+    if not src.exists():
+        return
+    dst.mkdir(parents=True, exist_ok=True)
+    for p in src.rglob("*"):
+        if p.is_dir():
+            continue
+        rel = p.relative_to(src)
+        out = dst / rel
+        out.parent.mkdir(parents=True, exist_ok=True)
+        if not out.exists():
+            shutil.copy2(p, out)
 
 REQUIRED_ARTIFACTS = [
     "release/HL-18-v1.0+local.1/artifacts/MANIFEST.json",
@@ -34,6 +51,21 @@ def require_files(bundle_dir: Path, rel_paths: list[str]) -> None:
             "FAIL: bundle missing required HL-18 release artifacts:\n- " + "\n- ".join(missing)
         )
 
+def require_files_in_tar(tar_path: Path, required_rel: list[str]) -> None:
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        tdp = Path(td)
+        with tarfile.open(tar_path, "r:gz") as tf:
+            tf.extractall(tdp)
+        # In the tarball, files are under "AuditorBundle/..."
+        root = tdp / "AuditorBundle"
+        missing = [rp for rp in required_rel if not (root / rp).exists()]
+        if missing:
+            raise SystemExit(
+                f"FAIL: tarball {tar_path.name} missing required files after build:\n- " + 
+                "\n- ".join(missing)
+            )
+
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as f:
@@ -46,8 +78,20 @@ def iter_files(bundle_dir: Path) -> Iterable[Path]:
         if p.is_dir():
             continue
         rel_parts = p.relative_to(bundle_dir).parts
-        if any(part in EXCLUDE_DIRS for part in rel_parts):
+        if not rel_parts:
             continue
+            
+        top = rel_parts[0]
+        
+        # exclude only top-level dirs
+        if top in EXCLUDE_TOPLEVEL:
+            continue
+            
+        # exclude runtime artifacts ONLY if it is top-level "artifacts/"
+        # (do NOT exclude release/**/artifacts/**)
+        if top == "artifacts":
+            continue
+            
         if p.name in EXCLUDE_FILES:
             continue
         yield p
@@ -149,6 +193,21 @@ def main() -> None:
     tar_name = args.tar_name or f"{args.bundle_id}.tar.gz"
     out_tar = dist_dir / tar_name
 
+    # --- STAGE HL-18 artifacts into bundle if missing ---
+    target_artifacts = bundle_dir / "release/HL-18-v1.0+local.1/artifacts"
+    
+    # candidate sources in monorepo (choose the one that exists)
+    candidates = [
+        Path("hijaiyyahlang-hl18/release/HL-18-v1.0+local.1/artifacts"),
+        Path("release/HL-18-v1.0+local.1/artifacts"),
+    ]
+
+    for src in candidates:
+        src = src.resolve()
+        if src.exists():
+            copy_tree_missing(src, target_artifacts)
+            break
+
     # 0) Hardening: check required artifacts
     require_files(bundle_dir, REQUIRED_ARTIFACTS)
 
@@ -162,6 +221,9 @@ def main() -> None:
 
     # 3) dist/SHA256SUMS.txt for tarball
     tar_sha_path = write_tarball_sha256(dist_dir, out_tar)
+
+    # 4) Anti-leak verification: check tarball contents
+    require_files_in_tar(out_tar, REQUIRED_ARTIFACTS)
 
     print("OK")
     print("bundle_dir:", bundle_dir)
