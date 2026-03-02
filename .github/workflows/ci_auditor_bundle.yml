@@ -42,6 +42,7 @@ jobs:
           . .venv/bin/activate
 
           pip install -r requirements.lock.txt
+          pip install -e hisa-vm
           pip install -e hl18
 
           python scripts/verify_all.py

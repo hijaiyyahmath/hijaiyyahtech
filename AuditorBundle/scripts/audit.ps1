@@ -20,11 +20,11 @@ $VenvPath = Join-Path $RootDir ".venv\Scripts\Activate.ps1"
 
 # 3) Install dependencies
 Write-Host "Installing dependencies..."
-pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.lock.txt
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-pip install -r requirements.lock.txt
+python -m pip install -e hisa-vm
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-pip install -e hl18 -e hisa-vm
+python -m pip install -e hl18
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 # Verify installation

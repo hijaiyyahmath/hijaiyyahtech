@@ -20,9 +20,9 @@ source .venv/bin/activate
 
 # 3) Install dependencies
 echo "Installing dependencies..."
-pip install --upgrade pip setuptools wheel
-pip install -r requirements.lock.txt
-pip install -e hl18 -e hisa-vm
+python -m pip install -r requirements.lock.txt
+python -m pip install -e hisa-vm
+python -m pip install -e hl18
 
 # Verify installation
 echo "Checking package availability..."
