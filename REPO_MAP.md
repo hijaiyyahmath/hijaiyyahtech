@@ -7,7 +7,7 @@ The system follows a strict pipeline from visual glyphs to audit-grade reports:
 
 ```mermaid
 graph TD
-    A[glyph/ SVG Assets] -->|Analysis| B[hijaiyahlang-hl18]
+    A[glyph/ SVG Assets] -->|Analysis| B[hijaiyyahlang-hl18]
     B -->|Bensin| C[MH-28-v1.0-18D.csv]
     C -->|Audit| D[hisa-vm]
     D -->|Assembler| E[Bytecode .bin]

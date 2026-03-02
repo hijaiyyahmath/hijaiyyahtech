@@ -10,7 +10,7 @@ def solve_decode_any(target: List[int], gens: Dict[str, List[int]], *, time_limi
     try:
         from ortools.sat.python import cp_model  # type: ignore
     except Exception as e:
-        raise RuntimeError("OR-Tools not installed. Install: pip install hijaiyahlang[solver]") from e
+        raise RuntimeError("OR-Tools not installed. Install: pip install hijaiyyahlang[solver]") from e
 
     letters = sorted(gens.keys())
     model = cp_model.CpModel()

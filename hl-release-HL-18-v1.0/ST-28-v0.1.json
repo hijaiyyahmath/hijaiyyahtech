@@ -22,7 +22,7 @@
     }
   },
   "dataset_file": "MH-28-v1.0-18D.csv",
-  "glyph_source": "Hijaiyah Glyph/",
+  "glyph_source": "Hijaiyyah Glyph/",
   "hamzah_note": "Hamzah treated as marker (hamzah_marker field), not separate letter",
   "letter_count": 28,
   "letters": [

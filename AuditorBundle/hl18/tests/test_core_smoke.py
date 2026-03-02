@@ -1,7 +1,7 @@
 import os
 import pytest
-from hijaiyahlang.dataset import load_mh28_csv, cod_word
-from hijaiyahlang.core import audit_v18
+from hijaiyyahlang.dataset import load_mh28_csv, cod_word
+from hijaiyyahlang.core import audit_v18
 
 @pytest.mark.skipif(not os.path.exists("../hl-release-HL-18-v1.0/MH-28-v1.0-18D.csv"), reason="Release CSV not found")
 def test_letters_injective():

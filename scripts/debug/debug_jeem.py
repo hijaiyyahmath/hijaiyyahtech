@@ -3,7 +3,7 @@ from skimage.morphology import skeletonize
 from generate_st28_full import extract_trace, svg_to_png
 
 # Direct check of Jeem
-svg_path = "Hijaiyah Glyph/Arabic_letter_Jeem.svg"
+svg_path = "Hijaiyyah Glyph/Arabic_letter_Jeem.svg"
 png_path = "_debug_jeem.png"
 
 print(f"Converting {svg_path} -> {png_path}")

@@ -3,9 +3,9 @@
 // src/components/DownloadButtons.tsx
 export default function DownloadButtons() {
     const links = [
-        "/downloads/hgss/evidence.json",
-        "/downloads/hgss/evidence.expected.json",
-        "/downloads/hgss/evidence.sha256.txt"
+        "/hijaiyyahtech/downloads/hgss/evidence.json",
+        "/hijaiyyahtech/downloads/hgss/evidence.expected.json",
+        "/hijaiyyahtech/downloads/hgss/evidence.sha256.txt"
     ];
 
     async function copyLinks() {

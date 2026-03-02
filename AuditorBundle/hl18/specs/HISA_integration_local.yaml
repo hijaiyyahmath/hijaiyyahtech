@@ -1,6 +1,6 @@
 hisa:
-  asm_cmd: ["python", "c:/hijaiyah-codex/hisa-vm/tools/hisa-asm.py"]
-  run_cmd: ["python", "c:/hijaiyah-codex/hisa-vm/tools/hisa-run.py"]
+  asm_cmd: ["python", "c:/hijaiyyah-codex/hisa-vm/tools/hisa-asm.py"]
+  run_cmd: ["python", "c:/hijaiyyah-codex/hisa-vm/tools/hisa-run.py"]
 
   source_ext: ".hisaasm"
 

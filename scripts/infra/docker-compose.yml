@@ -1,7 +1,7 @@
 services:
-  hijaiyah-toolchain:
+  hijaiyyah-toolchain:
     build: .
-    container_name: hijaiyah-toolchain
+    container_name: hijaiyyah-toolchain
     user: "0:0"
     working_dir: /work
     volumes:

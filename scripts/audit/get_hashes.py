@@ -6,7 +6,7 @@ files = [
     'verify_vortex.py', 
     'ST-28-v0.1.json', 
     'h28_tag36_table.jsonl', 
-    'HijaiyahGlyphPack.zip'
+    'HijaiyyahGlyphPack.zip'
 ]
 for f in files:
     p = os.path.join(d, f)

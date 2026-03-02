@@ -20,9 +20,9 @@ import numpy as np
 import networkx as nx
 from skimage.morphology import skeletonize
 
-# ── hijaiyahlang audit ──
-sys.path.insert(0, str(Path(__file__).parent / "hijaiyahlang-hl18" / "src"))
-from hijaiyahlang.core import audit_v18
+# ── hijaiyyahlang audit ──
+sys.path.insert(0, str(Path(__file__).parent / "hijaiyyahlang-hl18" / "src"))
+from hijaiyyahlang.core import audit_v18
 
 # ============================================================
 #  GLYPH MAPPING: filename → arabic letter
@@ -648,7 +648,7 @@ def extract_trace(img_path, letter_char=""):
 #  MAIN
 # ============================================================
 def main():
-    glyph_dir  = Path("Hijaiyah Glyph")
+    glyph_dir  = Path("Hijaiyyah Glyph")
     csv_path   = Path("hl-release-HL-18-v1.0/MH-28-v1.0-18D.csv")
     output_path = Path("hl-release-HL-18-v1.0/ST-28-v0.1.json")
     tmp_dir    = Path("_tmp_png")
@@ -750,7 +750,7 @@ def main():
             }
         },
         "dataset_file": "MH-28-v1.0-18D.csv",
-        "glyph_source": "Hijaiyah Glyph/",
+        "glyph_source": "Hijaiyyah Glyph/",
         "hamzah_note": "Hamzah treated as marker (hamzah_marker field), not separate letter",
         "letter_count": len(letters_out),
         "letters": letters_out

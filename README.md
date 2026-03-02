@@ -6,7 +6,7 @@ A deterministic, audit-aware technology stack built from Hijaiyyah geometric cod
 
 ## 🌐 Live Website
 
-**[https://hijaiyahtech.github.io/hijaiyyahmath.org/](https://hijaiyahtech.github.io/hijaiyyahmath.org/)**
+**[https://hijaiyyahmath.github.io/hijaiyyahtech/](https://hijaiyyahmath.github.io/hijaiyyahtech/)**
 
 ## Stack Components
 
@@ -19,7 +19,7 @@ A deterministic, audit-aware technology stack built from Hijaiyyah geometric cod
 
 ## Auditor Bundle
 
-Download the offline auditor bundle from the [Releases](https://github.com/hijaiyahtech/hijaiyyahmath.org/releases) page.
+Download the offline auditor bundle from the [Releases](https://github.com/hijaiyyahmath/hijaiyyahtech/releases) page.
 
 ```bash
 # Linux/macOS

@@ -1,4 +1,4 @@
-# Evaluation Protocol — Hijaiyah-AI
+# Evaluation Protocol — Hijaiyyah-AI
 
 ## 1. Metrics
 

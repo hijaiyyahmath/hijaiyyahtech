@@ -5,7 +5,7 @@ import unicodedata
 def nfc(s: str) -> str:
     return unicodedata.normalize("NFC", s)
 
-HIJAIYAH_SET = "ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و ه ي".split()
+HIJAIYYAH_SET = "ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و ه ي".split()
 
 def generate():
     # Load Fa and Waw
@@ -20,7 +20,7 @@ def generate():
     template = fa_data.copy()
     
     letters_list = []
-    for char in HIJAIYAH_SET:
+    for char in HIJAIYYAH_SET:
         if char == "ف":
             letters_list.append(fa_data)
         elif char == "و":

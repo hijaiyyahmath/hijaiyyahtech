@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 # Add HISA-VM to PYTHONPATH
-hisa_vm_root = Path(r"c:\hijaiyah-codex\hisa-vm")
+hisa_vm_root = Path(r"c:\hijaiyyah-codex\hisa-vm")
 sys.path.append(str(hisa_vm_root / "src"))
 
 from hisavm.vm import HisaVM, Trap
@@ -15,7 +15,7 @@ from hisavm.master import load_master_csv
 def run_demo():
     # Load Master Data
     data_csv = hisa_vm_root / "data" / "MH-28-v1.0-18D.csv"
-    data_hij28 = Path(r"c:\hijaiyah-codex\hisa-vm\data\HIJAIYYAH_28.txt")
+    data_hij28 = Path(r"c:\hijaiyyah-codex\hisa-vm\data\HIJAIYYAH_28.txt")
     
     v18_by_index, _ = load_master_csv(data_csv, data_hij28, strict_formulas=True)
 

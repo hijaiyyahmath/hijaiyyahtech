@@ -17,7 +17,7 @@ import unittest
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "src"))
 
-from hijaiyahlang.hb import load_hb_json, load_hb_bin, save_hb_bin
+from hijaiyyahlang.hb import load_hb_json, load_hb_bin, save_hb_bin
 
 
 def find_artifacts():

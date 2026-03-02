@@ -6,7 +6,7 @@ import sys
 import unicodedata
 from typing import Dict, List, Tuple
 
-HIJAIYAH_SET = set("ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و ه ي".split())
+HIJAIYYAH_SET = set("ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و ه ي".split())
 TATWEEL = "\u0640"
 
 EXPECTED_HEADERS = [
@@ -109,10 +109,10 @@ def main() -> int:
             return 1
 
         lids_set = set(seen_letters)
-        if lids_set != HIJAIYAH_SET:
-            missing = HIJAIYAH_SET - lids_set
-            extra = lids_set - HIJAIYAH_SET
-            print("FAIL: himpunan huruf tidak cocok dengan HIJAIYAH_SET", file=sys.stderr)
+        if lids_set != HIJAIYYAH_SET:
+            missing = HIJAIYYAH_SET - lids_set
+            extra = lids_set - HIJAIYYAH_SET
+            print("FAIL: himpunan huruf tidak cocok dengan HIJAIYYAH_SET", file=sys.stderr)
             print(" missing:", " ".join(sorted(missing)), file=sys.stderr)
             print(" extra  :", " ".join(sorted(extra)), file=sys.stderr)
             return 1

@@ -21,7 +21,7 @@ export default function ReleaseBadge() {
                         </div>
                     ) : null}
                     <div className="pt-1">
-                        <a className="text-blue-700 underline" href="/downloads/hgss/evidence.json" target="_blank">
+                        <a className="text-blue-700 underline" href="/hijaiyyahtech/downloads/hgss/evidence.json" target="_blank">
                             Download public evidence.json
                         </a>
                     </div>

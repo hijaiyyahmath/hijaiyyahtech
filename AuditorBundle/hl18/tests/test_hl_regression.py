@@ -17,7 +17,7 @@ import unittest
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "src"))
 
-from hijaiyahlang.core import audit_v18, add18, sub18z, asN, mod18
+from hijaiyyahlang.core import audit_v18, add18, sub18z, asN, mod18
 
 V18_COLS = [
     "ThetaHat", "nt", "nf", "nm",

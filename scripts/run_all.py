@@ -14,7 +14,7 @@ def run_script(script_name):
 
 def main():
     print("==========================================")
-    print("   HIJAIYAH-CODEX FULL PIPELINE RUNNER    ")
+    print("   HIJAIYYAH-CODEX FULL PIPELINE RUNNER    ")
     print("==========================================")
     
     pipeline = [

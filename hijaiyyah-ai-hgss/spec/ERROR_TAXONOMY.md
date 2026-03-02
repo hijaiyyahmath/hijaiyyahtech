@@ -1,4 +1,4 @@
-# Error Taxonomy — Hijaiyah-AI
+# Error Taxonomy — Hijaiyyah-AI
 
 Errors identified during the Guarded repair loop are categorized into the following taxonomy to provide precise feedback for LLM correction.
 

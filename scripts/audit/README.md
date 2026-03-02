@@ -1,7 +1,7 @@
 # Audit & Integrity Scripts
 Location: `scripts/audit/`
 
-This folder contains the core logic for verifying the integrity and audit trails of the Hijaiyah Codex release.
+This folder contains the core logic for verifying the integrity and audit trails of the Hijaiyyah Codex release.
 
 ## Key Scripts
 - `audit_script.py`: Main forensic audit execution logic.

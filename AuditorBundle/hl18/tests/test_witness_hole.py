@@ -19,7 +19,7 @@ import unittest
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "src"))
 
-from hijaiyahlang.hb import load_hb_json, is_in_monoid_greedy
+from hijaiyyahlang.hb import load_hb_json, is_in_monoid_greedy
 
 # Canonical v18 column names (the 18D identity vector)
 V18_COLS = [

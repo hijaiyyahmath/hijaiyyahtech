@@ -10,7 +10,7 @@ mkdir -p "$RESULTS" "$NORMDIR"
 chmod 777 "$NORMDIR"
 rm -f "$NORMDIR/generators.txt"
 
-echo "=== Hijaiyah toolchain run ===" | tee "$RESULTS/manifest.txt"
+echo "=== Hijaiyyah toolchain run ===" | tee "$RESULTS/manifest.txt"
 date -u +"UTC %Y-%m-%d %H:%M:%S" | tee -a "$RESULTS/manifest.txt"
 echo "PWD=$(pwd)" | tee -a "$RESULTS/manifest.txt"
 
@@ -64,7 +64,7 @@ echo "== Running Normaliz ==" | tee -a "$RESULTS/manifest.txt"
 
 python3 /usr/local/bin/make_normaliz_input.py /work/A /work/normaliz/generators.txt
 
-IN=/work/normaliz/hijaiyah.in
+IN=/work/normaliz/hijaiyyah.in
 : > "$IN"
 printf "amb_space 14\n" >> "$IN"
 printf "monoid 28\n"   >> "$IN"
@@ -77,7 +77,7 @@ echo "Command: normaliz $IN" | tee -a "$RESULTS/manifest.txt"
 normaliz "$IN" | tee "$RESULTS/normaliz.log" || true
 
 # Copy Normaliz outputs (raw certificates)
-cp -f "$NORMDIR"/hijaiyah.* "$RESULTS/" 2>/dev/null || true
+cp -f "$NORMDIR"/hijaiyyah.* "$RESULTS/" 2>/dev/null || true
 cp -f "$NORMDIR"/*.txt "$RESULTS/" 2>/dev/null || true
 
 echo "" | tee -a "$RESULTS/manifest.txt"

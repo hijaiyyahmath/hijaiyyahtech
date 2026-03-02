@@ -9,7 +9,7 @@ import json
 import math
 from typing import Dict, Optional, Tuple
 
-from hijaiyahlang.ir import letter_id, H28_SET, validate_letter
+from hijaiyyahlang.ir import letter_id, H28_SET, validate_letter
 
 
 class OwnerModel:
@@ -27,7 +27,7 @@ class OwnerModel:
     def observe(self, word: str) -> None:
         """
         Update bigram frequencies from a word.
-        word: string of Hijaiyah letters (e.g. "بسم").
+        word: string of Hijaiyyah letters (e.g. "بسم").
         Tatweel (U+0640) is stripped before processing.
         """
         # Strip tatweel first, then validate each character

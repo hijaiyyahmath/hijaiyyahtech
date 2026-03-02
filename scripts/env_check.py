@@ -17,7 +17,7 @@ def check_python_version():
 
 def check_required_folders():
     folders = [
-        "hijaiyahlang-hl18",
+        "hijaiyyahlang-hl18",
         "hisa-vm",
         "hgss-hc18dc",
         "hijaiyyah-ai-hgss",
@@ -72,7 +72,7 @@ def check_root_data():
     return True
 
 def main():
-    print("=== Hijaiyah-Codex Environment Check ===")
+    print("=== Hijaiyyah-Codex Environment Check ===")
     success = True
     success &= check_python_version()
     success &= check_required_folders()

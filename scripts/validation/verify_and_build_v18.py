@@ -2,7 +2,7 @@
 import csv, sys, unicodedata
 
 TATWEEL = "\u0640"
-HIJAIYAH_SET = set("ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و ه ي".split())
+HIJAIYYAH_SET = set("ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و ه ي".split())
 
 def letter_id(s: str) -> str:
     s = unicodedata.normalize("NFC", s)
@@ -27,8 +27,8 @@ def main(path: str):
     for i, row in enumerate(rows, 1):
         raw = row["letter"]
         lid = letter_id(raw)
-        if lid not in HIJAIYAH_SET:
-            die(f"row {i}: letter_id not in HIJAIYAH_SET: raw={raw!r} lid={lid!r}")
+        if lid not in HIJAIYYAH_SET:
+            die(f"row {i}: letter_id not in HIJAIYYAH_SET: raw={raw!r} lid={lid!r}")
         seen_letters.append(lid)
 
         ThetaHat = I(row,"ThetaHat")
@@ -62,8 +62,8 @@ def main(path: str):
 
     if len(seen_letters) != 28:
         die(f"Expected 28 rows; got {len(seen_letters)}")
-    if set(seen_letters) != HIJAIYAH_SET:
-        die(f"Letter set mismatch: missing={HIJAIYAH_SET-set(seen_letters)} extra={set(seen_letters)-HIJAIYAH_SET}")
+    if set(seen_letters) != HIJAIYYAH_SET:
+        die(f"Letter set mismatch: missing={HIJAIYYAH_SET-set(seen_letters)} extra={set(seen_letters)-HIJAIYYAH_SET}")
 
     print("PASS: formulas OK (AN/AK/AQ implied; U/rho verified), 28/28 letters OK, v18 injective OK.")
     print("Unique v18 count:", len(v18_map))

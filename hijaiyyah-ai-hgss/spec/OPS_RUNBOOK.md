@@ -1,4 +1,4 @@
-# OPS Runbook — Hijaiyah-AI
+# OPS Runbook — Hijaiyyah-AI
 
 ## 1. Local Development
 Run a single guarded case for debugging:
@@ -18,5 +18,5 @@ python tools/run_ab_test.py --dataset datasets/tasks/hgss_evidence_cases.jsonl -
 - Vendored `hgss-hc18dc` dependency in `deps/`
 
 ## 4. Maintenance
-- **Update Locks**: If the normative HGSS release changes, update `spec/RELEASE_IDENTITY.md` and `src/hijaiyah_ai_hgss/config.py`.
+- **Update Locks**: If the normative HGSS release changes, update `spec/RELEASE_IDENTITY.md` and `src/hijaiyyah_ai_hgss/config.py`.
 - **Expand Taxonomy**: Add new error types as the underlying validator evolves.

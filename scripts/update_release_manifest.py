@@ -35,7 +35,7 @@ def main():
         
     # Build URLs (Assuming standard GitHub release pattern)
     tag = rel_id.get("release_channel", "stack-v1.0")
-    base_url = f"https://github.com/hijaiyahtech/hijaiyyahmath.org/releases/download/{tag}"
+    base_url = f"https://github.com/hijaiyyahmath/hijaiyyahtech/releases/download/{tag}"
     
     new_entry = {
         "bundle_id": rel_id["bundle_id"],
@@ -47,7 +47,7 @@ def main():
         "sha256sums_url": f"{base_url}/SHA256SUMS.txt",
         "docker_image": "ghcr.io/hijaiyyah/stack-auditor",
         "docker_digest": "sha256:FIXME_LOCKED_DIGEST", # Should be updated if Docker build is automated
-        "github_release_url": f"https://github.com/hijaiyahtech/hijaiyyahmath.org/releases/tag/{tag}"
+        "github_release_url": f"https://github.com/hijaiyyahmath/hijaiyyahtech/releases/tag/{tag}"
     }
     
     # Load existing manifest

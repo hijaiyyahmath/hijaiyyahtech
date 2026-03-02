@@ -1,5 +1,5 @@
 """
-hb.py — HijaiyahLang Hilbert Basis API
+hb.py — HijaiyyahLang Hilbert Basis API
 Loads HB18.json / HB18.bin, provides membership & codec.
 """
 from __future__ import annotations

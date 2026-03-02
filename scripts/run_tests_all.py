@@ -36,10 +36,10 @@ def run_pytest_in_module(module_path: Path):
         return True # Treat as warning for demo purposes
 
 def main():
-    print("=== Hijaiyah-Codex Test Runner ===")
+    print("=== Hijaiyyah-Codex Test Runner ===")
     root = Path(".")
     modules = [
-        "hijaiyahlang-hl18",
+        "hijaiyyahlang-hl18",
         "hisa-vm",
         "hgss-hc18dc",
         "hijaiyyah-ai-hgss",

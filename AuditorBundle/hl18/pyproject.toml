@@ -1,5 +1,5 @@
 [project]
-name = "hijaiyahlang"
+name = "hijaiyyahlang"
 version = "0.1.0"
 description = "Virtual HijaiyyahLang (HL-18) engine + release verifier"
 readme = "README.md"
@@ -13,8 +13,8 @@ solver = ["ortools>=9.8.0"]
 dev = ["pytest>=8.0.0", "ruff>=0.5.0"]
 
 [project.scripts]
-hl18 = "hijaiyahlang.cli:main"
-verify-hl18-release = "hijaiyahlang.verify_release:main"
+hl18 = "hijaiyyahlang.cli:main"
+verify-hl18-release = "hijaiyyahlang.verify_release:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

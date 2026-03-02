@@ -1,7 +1,7 @@
 import csv
 
-in_csv = r"c:\hijaiyah-codex\MH-28-v1.0.csv"
-out_in = r"c:\hijaiyah-codex\MH_18x28.in"
+in_csv = r"c:\hijaiyyah-codex\MH-28-v1.0.csv"
+out_in = r"c:\hijaiyyah-codex\MH_18x28.in"
 
 letters_order = ["ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","و","هـ","ي"]
 

@@ -19,13 +19,13 @@ export default function EvidenceVerifier() {
 
     // load expected sha (public)
     async function loadExpected() {
-        const r = await fetch("/downloads/hgss/evidence.expected.json", { cache: "no-store" });
+        const r = await fetch("/hijaiyyahtech/downloads/hgss/evidence.expected.json", { cache: "no-store" });
         const j = await r.json();
         setExpected(j.expected_event_sha256 || "");
     }
 
     async function loadSample() {
-        const r = await fetch("/downloads/hgss/evidence.json", { cache: "no-store" });
+        const r = await fetch("/hijaiyyahtech/downloads/hgss/evidence.json", { cache: "no-store" });
         const txt = await r.text();
         setRawText(txt);
         const obj = JSON.parse(txt);
@@ -92,14 +92,14 @@ export default function EvidenceVerifier() {
                     </button>
                     <a
                         className="rounded-md border px-3 py-2 text-sm dark:border-gray-800 dark:text-gray-300"
-                        href="/downloads/hgss/evidence.json"
+                        href="/hijaiyyahtech/downloads/hgss/evidence.json"
                         download
                     >
                         Download Sample
                     </a>
                     <a
                         className="rounded-md border px-3 py-2 text-sm dark:border-gray-800 dark:text-gray-300"
-                        href="/downloads/hgss/evidence.sha256.txt"
+                        href="/hijaiyyahtech/downloads/hgss/evidence.sha256.txt"
                         target="_blank"
                     >
                         Sample SHA-256

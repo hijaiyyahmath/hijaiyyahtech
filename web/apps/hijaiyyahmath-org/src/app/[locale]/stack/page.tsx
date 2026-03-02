@@ -6,7 +6,7 @@ function StackDiagram() {
     const diagram = `
 HL-18 (Mathematics / v18)
       ↓
-HijaiyahLang (Language)
+HijaiyyahLang (Language)
       ↓
 HISA (ISA Contract)
       ↓
@@ -44,7 +44,7 @@ export default function Page() {
             label: "Language (HL)",
             content: (
                 <div className="space-y-2 text-sm">
-                    <div className="font-semibold text-blue-700 dark:text-blue-400">Bagian II: HijaiyahLang HL-18</div>
+                    <div className="font-semibold text-blue-700 dark:text-blue-400">Bagian II: HijaiyyahLang HL-18</div>
                     <p className="text-gray-700 dark:text-gray-300">
                         A release-grade language core implementing word sequences as monoid aggregations.
                     </p>

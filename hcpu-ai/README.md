@@ -1,4 +1,4 @@
-# HCPU-AI (Hijaiyah Central Processing Unit for AI)
+# HCPU-AI (Hijaiyyah Central Processing Unit for AI)
 
 HCPU-AI is a deterministic, stack-based reference execution engine for the Hijaiyyah stack.
 

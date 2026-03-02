@@ -10,7 +10,7 @@ from generate_st28_full import (
 )
 
 def extract_csgi_jim():
-    svg_path = "Hijaiyah Glyph/Arabic_letter_Jeem.svg"
+    svg_path = "Hijaiyyah Glyph/Arabic_letter_Jeem.svg"
     png_path = "_jim_temp.png"
     
     # 1. Image Preprocessing

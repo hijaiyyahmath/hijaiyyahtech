@@ -2,16 +2,16 @@ import argparse, json, os, sys
 from typing import Any, Dict, List
 from pathlib import Path
 
-from hijaiyahlang.dataset import load_mh28_csv, cod_word
-from hijaiyahlang.core import audit_v18, mod18
-from hijaiyahlang.release import load_release
-from hijaiyahlang.hisa_config import load_hisa_integration_spec
-from hijaiyahlang.hisa_bridge import HISAVMRunner, write_master_overlay_28, index_of_letter
-from hijaiyahlang.normalize import normalize_letter_id
-from hijaiyahlang.engine import encode_text
+from hijaiyyahlang.dataset import load_mh28_csv, cod_word
+from hijaiyyahlang.core import audit_v18, mod18
+from hijaiyyahlang.release import load_release
+from hijaiyyahlang.hisa_config import load_hisa_integration_spec
+from hijaiyyahlang.hisa_bridge import HISAVMRunner, write_master_overlay_28, index_of_letter
+from hijaiyyahlang.normalize import normalize_letter_id
+from hijaiyyahlang.engine import encode_text
 
 def main() -> None:
-    # Ensure UTF-8 output for Hijaiyah characters
+    # Ensure UTF-8 output for Hijaiyyah characters
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 

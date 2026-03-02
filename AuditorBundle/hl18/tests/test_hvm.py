@@ -12,17 +12,17 @@ import unittest
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "src"))
 
-from hijaiyahlang.dataset import load_mh28_csv, cod_word
-from hijaiyahlang.core import audit_v18
-from hijaiyahlang.ir import (
+from hijaiyyahlang.dataset import load_mh28_csv, cod_word
+from hijaiyyahlang.core import audit_v18
+from hijaiyyahlang.ir import (
     Op, IRInst, compile_word, serialize_ir, deserialize_ir,
     letter_id, validate_letter, H28_SET,
 )
-from hijaiyahlang.hcpu import (
+from hijaiyyahlang.hcpu import (
     HCPU, ConformanceMode, NonNormativeError, HCPUError, ExecResult,
 )
-from hijaiyahlang.validator_loop import ValidatorLoop, ErrorType
-from hijaiyahlang.owner_learn import OwnerModel
+from hijaiyyahlang.validator_loop import ValidatorLoop, ErrorType
+from hijaiyyahlang.owner_learn import OwnerModel
 
 
 def get_dataset():

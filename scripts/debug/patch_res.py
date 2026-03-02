@@ -1,4 +1,4 @@
-path = r'c:\hijaiyah-codex\generate_st28_full.py'
+path = r'c:\hijaiyyah-codex\generate_st28_full.py'
 with open(path, 'r', encoding='utf-8') as f:
     s = f.read()
 s = s.replace('target_size=200', 'target_size=600')

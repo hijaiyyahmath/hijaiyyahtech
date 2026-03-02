@@ -27,9 +27,9 @@ export default function Page() {
                 </div>
 
                 <ul className="mt-3 list-disc pl-5 text-sm">
-                    <li><a className="text-blue-700 underline" href="/downloads/hgss/evidence.json" target="_blank">/downloads/hgss/evidence.json</a></li>
-                    <li><a className="text-blue-700 underline" href="/downloads/hgss/evidence.expected.json" target="_blank">/downloads/hgss/evidence.expected.json</a></li>
-                    <li><a className="text-blue-700 underline" href="/downloads/hgss/evidence.sha256.txt" target="_blank">/downloads/hgss/evidence.sha256.txt</a></li>
+                    <li><a className="text-blue-700 underline" href="/hijaiyyahtech/downloads/hgss/evidence.json" target="_blank">/hijaiyyahtech/downloads/hgss/evidence.json</a></li>
+                    <li><a className="text-blue-700 underline" href="/hijaiyyahtech/downloads/hgss/evidence.expected.json" target="_blank">/hijaiyyahtech/downloads/hgss/evidence.expected.json</a></li>
+                    <li><a className="text-blue-700 underline" href="/hijaiyyahtech/downloads/hgss/evidence.sha256.txt" target="_blank">/hijaiyyahtech/downloads/hgss/evidence.sha256.txt</a></li>
                 </ul>
             </div>
         </div>

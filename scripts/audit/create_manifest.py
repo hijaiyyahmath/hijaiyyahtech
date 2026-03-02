@@ -48,8 +48,8 @@ manifest = {
       "sha256": get_sha256("generate_st28_full.py")
     },
     "source_glyphs": {
-      "file": "HijaiyahGlyphPack.zip",
-      "sha256": get_sha256("HijaiyahGlyphPack.zip")
+      "file": "HijaiyyahGlyphPack.zip",
+      "sha256": get_sha256("HijaiyyahGlyphPack.zip")
     },
     "validator_tool": {
       "file": "validate_st28.py",

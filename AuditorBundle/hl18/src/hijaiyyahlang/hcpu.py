@@ -9,9 +9,9 @@ from dataclasses import dataclass, field
 from enum import Enum, auto
 from typing import Any, Dict, List, Optional
 
-from hijaiyahlang.core import audit_v18, add18, mod18, Vector, AuditResult
-from hijaiyahlang.dataset import Dataset18
-from hijaiyahlang.ir import IRInst, Op, NORMATIVE_OPS
+from hijaiyyahlang.core import audit_v18, add18, mod18, Vector, AuditResult
+from hijaiyyahlang.dataset import Dataset18
+from hijaiyyahlang.ir import IRInst, Op, NORMATIVE_OPS
 
 
 class ConformanceMode(Enum):
@@ -51,7 +51,7 @@ class ExecResult:
 
 
 class HCPU:
-    """Pure Stack VM for HijaiyahLang IR execution."""
+    """Pure Stack VM for HijaiyyahLang IR execution."""
 
     MAX_STEPS = 10_000
 

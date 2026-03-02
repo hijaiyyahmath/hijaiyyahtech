@@ -131,9 +131,9 @@ def main(manifest_path="ST28_MANIFEST.json"):
                 "vortex_auditor", "output_dataset", "audit_table"]:
         check_file(man["integrity"][key], key)
 
-    # --- 4. Quality Audit: Hijaiyah Set & Tag36 Uniqueness ---
-    HIJAIYAH_NFC = "ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و هـ ي"
-    hijaiyah_set = set(HIJAIYAH_NFC.split())
+    # --- 4. Quality Audit: Hijaiyyah Set & Tag36 Uniqueness ---
+    HIJAIYYAH_NFC = "ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و هـ ي"
+    hijaiyyah_set = set(HIJAIYYAH_NFC.split())
     audit_filename = man["integrity"]["audit_table"]["file"]
     
     # Path safe resolve for audit table
@@ -162,15 +162,15 @@ def main(manifest_path="ST28_MANIFEST.json"):
     if len(letters_seen) != 28:
         fail(f"audit_table letters count must be 28; got {len(letters_seen)}")
     
-    if set(letters_seen) != hijaiyah_set:
-        fail(f"audit_table missing letters: {hijaiyah_set - set(letters_seen)}")
+    if set(letters_seen) != hijaiyyah_set:
+        fail(f"audit_table missing letters: {hijaiyyah_set - set(letters_seen)}")
     
     tags = [p[1] for p in pairs]
     tag_counts = Counter(tags)
     dups = [t for t, n in tag_counts.items() if n > 1]
     if dups:
         fail(f"Tag36 Collision Detected (Non-Injective): {dups}")
-    ok(f"Injective Hijaiyah Set: 28/28 verified (Tag36 format OK)")
+    ok(f"Injective Hijaiyyah Set: 28/28 verified (Tag36 format OK)")
 
     # --- 5. Dataset Completeness & Cryptographic Gate Validation ---
     dataset_filename = man["integrity"]["output_dataset"]["file"]
@@ -187,8 +187,8 @@ def main(manifest_path="ST28_MANIFEST.json"):
         fail(f"Dataset letters must be list of 28; got {type(letters)}")
 
     st_set = {x.get("letter") for x in letters}
-    if st_set != hijaiyah_set:
-        fail(f"Dataset letter set mismatch: missing={hijaiyah_set-st_set}")
+    if st_set != hijaiyyah_set:
+        fail(f"Dataset letter set mismatch: missing={hijaiyyah_set-st_set}")
 
     # Case-Insensitive Spec Block Digest Verification with strict format check
     spec_lock = man.get("spec_lock", {})

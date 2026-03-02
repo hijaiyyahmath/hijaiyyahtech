@@ -1,6 +1,6 @@
 # Hijaiyyah-AI HGSS VM v1.0
 
-AI-driven agent for Hijaiyah Guarded Signature Scheme (HGSS) evidence generation and validation.
+AI-driven agent for Hijaiyyah Guarded Signature Scheme (HGSS) evidence generation and validation.
 
 ## Features
 - **Baseline Mode**: Direct generation evaluation.

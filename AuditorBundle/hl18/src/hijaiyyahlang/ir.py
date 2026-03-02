@@ -1,5 +1,5 @@
 """
-ir.py — HVM IR Codex Compiler (HijaiyahLang → IR Instructions)
+ir.py — HVM IR Codex Compiler (HijaiyyahLang → IR Instructions)
 
 Compiles HL word sequences into stack-based IR instructions.
 Input standardized via letter_id (NFC + strip tatweel, H28-only).
@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from enum import IntEnum
 from typing import List, Optional
 
-from hijaiyahlang.dataset import Dataset18
+from hijaiyyahlang.dataset import Dataset18
 
 
 class Op(IntEnum):
@@ -62,8 +62,8 @@ def compile_word(word: str, ds: Dataset18, *,
                  validate: bool = False,
                  learn: bool = False) -> List[IRInst]:
     """
-    Compile a Hijaiyah word into IR instructions.
-    word: string of Hijaiyah letters (e.g. "بسم")
+    Compile a Hijaiyyah word into IR instructions.
+    word: string of Hijaiyyah letters (e.g. "بسم")
     """
     letters = [validate_letter(ch) for ch in word]
     if len(letters) == 0:

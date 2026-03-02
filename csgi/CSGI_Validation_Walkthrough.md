@@ -73,7 +73,7 @@ HL API Module: `hb.py` — Hilbert Basis loader (JSON + binary codec) dengan mon
 - 28/28 letters lulus `audit_v18`.
 - Additive closure, boundary cases, determinisme, dan 200‑round random fuzzing terverifikasi.
 
-## 4) Hijaiyah Virtual Machine (HVM)
+## 4) Hijaiyyah Virtual Machine (HVM)
 Architecture: Pure Stack VM with Conformance Modes
 
 | Mode | Opcodes | Purpose |
@@ -114,7 +114,7 @@ python csgi_mainpath_select.py CSGI_T_competitive.json
 python csgi_mainpath_select.py CSGI_cycle_tails_competitive.json
 
 # Full test suite (62 tests, 84 subtests)
-cd hijaiyahlang-hl18 && python -m pytest tests/ -v
+cd hijaiyyahlang-hl18 && python -m pytest tests/ -v
 ```
 
 ### 5.2 Hasil

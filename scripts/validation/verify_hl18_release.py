@@ -86,7 +86,7 @@ def fail(name: str, **details: Any) -> CheckResult:
 # CSGI Validation
 # ----------------------------
 
-HIJAIYAH_SET = set("ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و ه ي".split())
+HIJAIYYAH_SET = set("ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن و ه ي".split())
 
 def nfc(s: str) -> str:
     return unicodedata.normalize("NFC", s)
@@ -157,9 +157,9 @@ def validate_csgi_dataset(csgi_path: str) -> None:
             raise ValueError(
                 f"letters[{idx}].letter_id must be 1 char; got {lid!r} from {letter_raw!r}"
             )
-        if lid not in HIJAIYAH_SET:
+        if lid not in HIJAIYYAH_SET:
             raise ValueError(
-                f"letters[{idx}].letter_id not in HIJAIYAH_SET; got {lid!r} from {letter_raw!r}"
+                f"letters[{idx}].letter_id not in HIJAIYYAH_SET; got {lid!r} from {letter_raw!r}"
             )
         seen.append(lid)
 
@@ -247,9 +247,9 @@ def validate_csgi_dataset(csgi_path: str) -> None:
 
     if len(seen) != 28:
         raise ValueError(f"CSGI letters count must be 28; got {len(seen)}")
-    if set(seen) != HIJAIYAH_SET:
-        missing = HIJAIYAH_SET - set(seen)
-        extra = set(seen) - HIJAIYAH_SET
+    if set(seen) != HIJAIYYAH_SET:
+        missing = HIJAIYYAH_SET - set(seen)
+        extra = set(seen) - HIJAIYYAH_SET
         raise ValueError(f"CSGI letter set mismatch: missing={missing} extra={extra}")
 
 
@@ -487,7 +487,7 @@ def verify_normaliz_metrics(out_path: str, metrics_expected: Dict[str, Any]) -> 
     return ok("normaliz.metrics", path=out_path, found=found)
 
 def main() -> int:
-    # Ensure UTF-8 output for Hijaiyah characters and robust printing on Windows
+    # Ensure UTF-8 output for Hijaiyyah characters and robust printing on Windows
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 

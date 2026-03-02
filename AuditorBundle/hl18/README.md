@@ -1,4 +1,4 @@
-# HijaiyahLang (HL-18)
+# HijaiyyahLang (HL-18)
 
 Virtual engine and release verifier for HijaiyyahLang HL-18-v1.0.
 
@@ -23,7 +23,7 @@ python scripts/verify_hl18_release.py --spec specs/HL18_release_integrity_local.
 ## Structure
 - `release/HL-18-v1.0+local.1/`: Vendored release artifacts (Locked).
 - `specs/HL18_release_integrity_local.yaml`: Local integrity specification.
-- `src/hijaiyahlang/`: Core library and CLI.
+- `src/hijaiyyahlang/`: Core library and CLI.
 - `scripts/verify_hl18_release.py`: Forensic verifier.
 
 ## Usage
@@ -38,8 +38,8 @@ hl18 --csv release/HL-18-v1.0+local.1/MH-28-v1.0-18D.csv audit "بت"
 
 ### Library
 ```python
-from hijaiyahlang.dataset import load_mh28_csv, cod_word
-from hijaiyahlang.core import audit_v18
+from hijaiyyahlang.dataset import load_mh28_csv, cod_word
+from hijaiyyahlang.core import audit_v18
 
 ds = load_mh28_csv("release/HL-18-v1.0+local.1/MH-28-v1.0-18D.csv")
 v = cod_word("بت", ds)

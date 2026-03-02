@@ -3,10 +3,10 @@ import argparse, json, os
 from pathlib import Path
 from typing import Any, Dict, List
 
-from hijaiyahlang.hashutil import sha256_file
-from hijaiyahlang.spec import load_release_spec, ReleaseSpec
-from hijaiyahlang.normaliz_out import parse_metrics
-from hijaiyahlang.manifest import load_manifest, check_manifest_strict, check_manifest_minimal # Added check_manifest_minimal
+from hijaiyyahlang.hashutil import sha256_file
+from hijaiyyahlang.spec import load_release_spec, ReleaseSpec
+from hijaiyyahlang.normaliz_out import parse_metrics
+from hijaiyyahlang.manifest import load_manifest, check_manifest_strict, check_manifest_minimal # Added check_manifest_minimal
 
 def rpath(base: str, p: str) -> str:
     if os.path.isabs(p): return p

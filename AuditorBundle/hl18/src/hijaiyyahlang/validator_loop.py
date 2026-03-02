@@ -9,8 +9,8 @@ from dataclasses import dataclass, field
 from enum import Enum, auto
 from typing import Any, Dict, List, Optional
 
-from hijaiyahlang.core import audit_v18, Vector
-from hijaiyahlang.hb import HilbertBasis, is_in_monoid_greedy
+from hijaiyyahlang.core import audit_v18, Vector
+from hijaiyyahlang.hb import HilbertBasis, is_in_monoid_greedy
 
 
 class ErrorType(Enum):

@@ -3,16 +3,16 @@ import ReleaseBadge from "@/components/ReleaseBadge";
 import CodeBlock from "@/components/CodeBlock";
 import HijaiyyahLetterRow from "@/components/HijaiyyahLetterRow";
 
-export default function Page() {
+export default function Page({ params }: { params: { locale: string } }) {
     const quick = `# Quick verification (Windows PowerShell)
-cd c:\\hijaiyah-codex
+cd c:\\hijaiyyah-codex
 
 python scripts/env_check.py
 python scripts/run_tests_all.py
 python scripts/run_demos_all.py
 
 # Web sample
-curl http://localhost:3000/downloads/hgss/evidence.json`;
+curl http://localhost:3000/hijaiyyahtech/downloads/hgss/evidence.json`;
 
     return (
         <div className="space-y-6">
@@ -27,13 +27,13 @@ curl http://localhost:3000/downloads/hgss/evidence.json`;
                     </p>
 
                     <div className="flex flex-wrap gap-2">
-                        <Link className="rounded-md bg-black px-3 py-2 text-sm text-white dark:bg-white dark:text-black" href="/en/stack">
+                        <Link className="rounded-md bg-black px-3 py-2 text-sm text-white dark:bg-white dark:text-black" href={`/${params.locale}/stack`}>
                             View Technology Stack
                         </Link>
-                        <Link className="rounded-md border px-3 py-2 text-sm dark:border-gray-800" href="/en/tools/evidence-verifier">
+                        <Link className="rounded-md border px-3 py-2 text-sm dark:border-gray-800" href={`/${params.locale}/tools/evidence-verifier`}>
                             Evidence Verifier Tool
                         </Link>
-                        <Link className="rounded-md border px-3 py-2 text-sm dark:border-gray-800" href="/en/releases">
+                        <Link className="rounded-md border px-3 py-2 text-sm dark:border-gray-800" href={`/${params.locale}/releases`}>
                             Release Matrix
                         </Link>
                     </div>
@@ -114,7 +114,7 @@ curl http://localhost:3000/downloads/hgss/evidence.json`;
                     Readers can download the official HGSS sample and verify it using the web tool.
                 </p>
                 <div className="mt-2 text-sm">
-                    <a className="text-blue-700 underline" href="/downloads/hgss/evidence.json" target="_blank">/downloads/hgss/evidence.json</a>
+                    <a className="text-blue-700 underline" href="/hijaiyyahtech/downloads/hgss/evidence.json" target="_blank">/hijaiyyahtech/downloads/hgss/evidence.json</a>
                 </div>
             </div>
         </div>

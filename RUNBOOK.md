@@ -17,7 +17,7 @@ make all
 ### Windows (PowerShell)
 ```powershell
 # Set Environment
-$env:PYTHONPATH = ".;./hijaiyahlang-hl18/src;./hisa-vm/src;./hgss-hc18dc/src;./hijaiyyah-ai-hgss/src"
+$env:PYTHONPATH = ".;./hijaiyyahlang-hl18/src;./hisa-vm/src;./hgss-hc18dc/src;./hijaiyyah-ai-hgss/src"
 
 # Run Suite
 python scripts/env_check.py

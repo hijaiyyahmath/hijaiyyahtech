@@ -1,4 +1,4 @@
-# Hijaiyah-Codex Monorepo Makefile
+# Hijaiyyah-Codex Monorepo Makefile
 # Standardized entrypoint for environment, tests, and demos.
 
 PYTHON = python
@@ -6,7 +6,7 @@ PYTHON = python
 .PHONY: help env test demo all clean
 
 help:
-	@echo "Hijaiyah-Codex Monorepo Management"
+	@echo "Hijaiyyah-Codex Monorepo Management"
 	@echo "-----------------------------------"
 	@echo "Targets:"
 	@echo "  env   : Check environment, modules, and normative locks"

@@ -3,9 +3,9 @@ import csv
 import os
 import sys
 
-# Add the src path to sys.path so we can import hijaiyahlang
-sys.path.append(os.path.abspath("hijaiyahlang-hl18/src"))
-from hijaiyahlang.core import audit_v18
+# Add the src path to sys.path so we can import hijaiyyahlang
+sys.path.append(os.path.abspath("hijaiyyahlang-hl18/src"))
+from hijaiyyahlang.core import audit_v18
 
 csv_path = "hl-release-HL-18-v1.0/MH-28-v1.0-18D.csv"
 output_path = "hl-release-HL-18-v1.0/ST-28-v0.1.json"

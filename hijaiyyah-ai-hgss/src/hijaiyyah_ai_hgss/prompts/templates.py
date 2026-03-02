@@ -2,7 +2,7 @@ from __future__ import annotations
 
 # Prompt templates for the HGSS evidence generation and repair.
 
-BASE_SYSTEM_PROMPT = """You are a compliance generator for the Hijaiyah Guarded Signature Scheme (HGSS).
+BASE_SYSTEM_PROMPT = """You are a compliance generator for the Hijaiyyah Guarded Signature Scheme (HGSS).
 Your output MUST be a single, valid JSON object that conforms to the normative schema provided.
 Do not include any conversational text or markdown explanation, only the JSON object.
 """

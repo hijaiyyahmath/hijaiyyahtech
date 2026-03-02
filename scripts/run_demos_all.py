@@ -85,10 +85,10 @@ def run_demo_hisa():
 def run_demo_hl18():
     print(f"[*] Running HL-18 Verification Demo...")
     # Searching for main verification tool in hl18 module
-    tool = Path("hijaiyahlang-hl18/verify_hl18_release.py") # Example name
+    tool = Path("hijaiyyahlang-hl18/verify_hl18_release.py") # Example name
     if not tool.exists():
         # Fallback to any verification script found
-        candidates = list(Path("hijaiyahlang-hl18").glob("verify*.py"))
+        candidates = list(Path("hijaiyyahlang-hl18").glob("verify*.py"))
         if candidates:
             tool = candidates[0]
         else:
@@ -112,7 +112,7 @@ def run_demo_hl18():
         return True
 
 def main():
-    print("=== Hijaiyah-Codex Demo Runner ===")
+    print("=== Hijaiyyah-Codex Demo Runner ===")
     success = True
     success &= run_demo_hgss()
     success &= run_demo_hisa()

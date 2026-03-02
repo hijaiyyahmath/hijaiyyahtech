@@ -1,6 +1,6 @@
 # HijaiyyahMath.org Official Website
 
-Official portal for Hijaiyah Codex normative specifications, datasets, and audit verification tools.
+Official portal for Hijaiyyah Codex normative specifications, datasets, and audit verification tools.
 
 ## Setup
 ```bash

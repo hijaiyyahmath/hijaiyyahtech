@@ -4,7 +4,7 @@ import { bundleAnchorId, loadAuditorBundles } from "@/lib/auditorReleases";
 
 export const dynamic = "force-static";
 
-export default async function DownloadsPage() {
+export default async function DownloadsPage({ params }: { params: { locale: string } }) {
     const bundles = await loadAuditorBundles();
 
     return (
@@ -29,7 +29,7 @@ export default async function DownloadsPage() {
                         <div className={styles.actions}>
                             <a className={styles.button} href={b.tar_url}>Download .tar.gz</a>
                             <a className={styles.buttonSecondary} href={b.sha256sums_url}>SHA256SUMS.txt</a>
-                            <Link className={styles.buttonSecondary} href={`/docs/auditor-quickstart#${anchor}`}>
+                            <Link className={styles.buttonSecondary} href={`/${params.locale}/docs/auditor-quickstart#${anchor}`}>
                                 Quickstart
                             </Link>
                         </div>
