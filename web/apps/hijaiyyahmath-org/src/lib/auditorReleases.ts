@@ -10,7 +10,7 @@ export type AuditorBundle = {
     tar_sha256: string;
     sha256sums_url: string;
     docker_image: string;
-    docker_digest: string;
+    docker_digest: string | null;
     github_release_url: string;
 };
 
