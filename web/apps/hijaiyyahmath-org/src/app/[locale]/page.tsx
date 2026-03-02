@@ -12,7 +12,7 @@ python scripts/run_tests_all.py
 python scripts/run_demos_all.py
 
 # Web sample
-curl https://hijaiyyahmath.github.io/hijaiyyahtech/downloads/hgss/evidence.json`;
+curl https://hijaiyyahmath.github.io/hijaiyyahtech/en/artifacts/evidence.json`;
 
     return (
         <div className="space-y-6">
@@ -114,7 +114,7 @@ curl https://hijaiyyahmath.github.io/hijaiyyahtech/downloads/hgss/evidence.json`
                     Readers can download the official HGSS sample and verify it using the web tool.
                 </p>
                 <div className="mt-2 text-sm">
-                    <a className="text-blue-700 underline" href="/hijaiyyahtech/downloads/hgss/evidence.json" target="_blank">/hijaiyyahtech/downloads/hgss/evidence.json</a>
+                    <a className="text-blue-700 underline" href="/hijaiyyahtech/en/artifacts/evidence.json" download target="_blank">Download evidence.json</a>
                 </div>
             </div>
         </div>

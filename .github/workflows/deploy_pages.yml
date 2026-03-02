@@ -38,6 +38,11 @@ jobs:
         run: npm run build
         working-directory: web/apps/hijaiyyahmath-org
 
+      - name: Verify evidence.json published path
+        run: |
+          test -f out/en/artifacts/evidence.json
+        working-directory: web/apps/hijaiyyahmath-org
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
