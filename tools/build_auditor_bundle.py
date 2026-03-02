@@ -194,18 +194,18 @@ def main() -> None:
     out_tar = dist_dir / tar_name
 
     # --- STAGE HL-18 artifacts into bundle if missing ---
-    target_artifacts = bundle_dir / "release/HL-18-v1.0+local.1/artifacts"
+    target_path = bundle_dir / "release/HL-18-v1.0+local.1"
     
     # candidate sources in monorepo (choose the one that exists)
     candidates = [
-        Path("hijaiyyahlang-hl18/release/HL-18-v1.0+local.1/artifacts"),
-        Path("release/HL-18-v1.0+local.1/artifacts"),
+        Path("hijaiyyahlang-hl18/release/HL-18-v1.0+local.1"),
+        Path("release/HL-18-v1.0+local.1"),
     ]
 
     for src in candidates:
         src = src.resolve()
         if src.exists():
-            copy_tree_missing(src, target_artifacts)
+            copy_tree_missing(src, target_path)
             break
 
     # 0) Hardening: check required artifacts
