@@ -46,7 +46,7 @@ def main():
         "tar_sha256": tar_sha,
         "sha256sums_url": f"{base_url}/SHA256SUMS.txt",
         "docker_image": "ghcr.io/hijaiyyah/stack-auditor",
-        "docker_digest": "sha256:FIXME_LOCKED_DIGEST", # Should be updated if Docker build is automated
+        "docker_digest": None, # Should be updated if Docker build is automated
         "github_release_url": f"https://github.com/hijaiyyahmath/hijaiyyahtech/releases/tag/{tag}"
     }
     

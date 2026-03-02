@@ -1,5 +1,5 @@
 from __future__ import annotations
-import subprocess, os
+import subprocess, os, sys
 from pathlib import Path
 
 def run(cmd: list[str], cwd: Path) -> tuple[int, str, str]:
@@ -8,9 +8,6 @@ def run(cmd: list[str], cwd: Path) -> tuple[int, str, str]:
     return cp.returncode, cp.stdout.decode("utf-8","replace"), cp.stderr.decode("utf-8","replace")
 
 def main() -> None:
-    import sys
-    sys.stdout.reconfigure(encoding='utf-8')
-    sys.stderr.reconfigure(encoding='utf-8')
     # Preflight check
     try:
         import hisavm  # noqa: F401
@@ -26,7 +23,7 @@ def main() -> None:
     art.mkdir(parents=True, exist_ok=True)
 
     # A) HL-18 integrity
-    cmd = ["verify-hl18-release", "--spec", "specs/HL18_release_integrity_local.yaml", "--check-manifest"]
+    cmd = [sys.executable, "-m", "hijaiyyahlang.verify_release", "--spec", "specs/HL18_release_integrity_local.yaml", "--check-manifest"]
     rc, out, err = run(cmd, root)
     (art / "verify-hl18-release.stdout.txt").write_text(out, encoding="utf-8")
     (art / "verify-hl18-release.stderr.txt").write_text(err, encoding="utf-8")
@@ -37,7 +34,7 @@ def main() -> None:
 
     # B) PASS conformance (Jim)
     cmd = [
-        "hl18", "hisa-audit-letter",
+        sys.executable, "-m", "hijaiyyahlang.cli", "hisa-audit-letter",
         "--release-dir", "release/HL-18-v1.0+local.1",
         "--letter-id", "ج",
         "--closed-hint", "0",
@@ -67,7 +64,7 @@ def main() -> None:
     binp = con_dir / "trap_core1.bin"
 
     # assemble
-    cmd = ["python", "hisa-vm/tools/hisa-asm.py", "--in", str(src), "--out", str(binp)]
+    cmd = [sys.executable, "hisa-vm/tools/hisa-asm.py", "--in", str(src), "--out", str(binp)]
     rc, out, err = run(cmd, root)
     (con_dir / "asm.stdout.txt").write_text(out, encoding="utf-8")
     (con_dir / "asm.stderr.txt").write_text(err, encoding="utf-8")
@@ -78,7 +75,7 @@ def main() -> None:
 
     # run
     cmd = [
-        "python", "hisa-vm/tools/hisa-run.py",
+        sys.executable, "hisa-vm/tools/hisa-run.py",
         "--hij28", "hisa-vm/data/HIJAIYYAH_28.txt",
         "--program", str(binp),
         "--master", "release/HL-18-v1.0+local.1/MH-28-v1.0-18D.csv"
