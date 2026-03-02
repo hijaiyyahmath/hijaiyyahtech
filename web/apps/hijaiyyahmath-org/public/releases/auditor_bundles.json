@@ -16,11 +16,11 @@
         "date": "2026-02-28",
         "hl18_release_id": "HL-18-v1.0+local.1",
         "hisa_vm_release_id": "HISA-VM-v1.0+local.1",
-        "tar_url": "https://github.com/hijaiyyahtech/hijaiyyahmath.org/releases/download/stack-v1.0/HijaiyyahStack-AuditorBundle-v1.0_2026-02-28.tar.gz",
+        "tar_url": "https://github.com/hijaiyyahmath/hijaiyyahtech/releases/download/stack-v1.0/HijaiyyahStack-AuditorBundle-v1.0_2026-02-28.tar.gz",
         "tar_sha256": "4a17aa3f247f28ff9a0f69469f69e6be80915edcb985ba4b371ea1597e7ae6c8",
-        "sha256sums_url": "https://github.com/hijaiyyahtech/hijaiyyahmath.org/releases/download/stack-v1.0/SHA256SUMS.txt",
+        "sha256sums_url": "https://github.com/hijaiyyahmath/hijaiyyahtech/releases/download/stack-v1.0/SHA256SUMS.txt",
         "docker_image": "ghcr.io/hijaiyyah/stack-auditor",
         "docker_digest": "sha256:5687713f019688344688afe06428bfc2ba1192bff0e1e043ce4adb912808c32493",
-        "github_release_url": "https://github.com/hijaiyyahtech/hijaiyyahmath.org/releases/tag/stack-v1.0"
+        "github_release_url": "https://github.com/hijaiyyahmath/hijaiyyahtech/releases/tag/stack-v1.0"
     }
 ]
