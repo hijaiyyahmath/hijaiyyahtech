@@ -1,0 +1,38 @@
+{
+  "hl_release_id": "HL-18-v1.0+local.1",
+  "dimension": 18,
+  "dataset_18d_sha256": "6020188a7929ddf6231ac2f61c96ac0007761f8d0512dd7ce2ffd2ec018f12bd",
+  "normaliz": {
+    "input": {
+      "path": "MH_18x28.in",
+      "sha256": "773a8a670da8d1f0f81c74831aa1cb50c2eeff50f8ac1b3e226a464fca339719"
+    },
+    "output": {
+      "path": "MH_18x28.out",
+      "sha256": "51ff55f4cd265a6d4077204b73f8055dc8fee70b91540a19e538f8d5b173edac"
+    }
+  },
+  "metrics": {
+    "rank": 14,
+    "external_index": 1,
+    "internal_index": 2,
+    "integrally_closed": false,
+    "embedding_dimension": 18,
+    "hilbert_basis_size": 38,
+    "extreme_rays": 25,
+    "support_hyperplanes": 21,
+    "equations": 4,
+    "congruences": 0,
+    "congruence_modulus": null,
+    "lattice_basis_size": 14
+  },
+  "artifacts": {
+    "artifacts/HB18.json": "d497e6b02538a0c500741a2f4f97e3b79a5b6e4027dfbf5eb1acdb0ca562aef2",
+    "artifacts/HYP18.json": "30449a4571f14f574010f660f91998289702728b6f494492fb7c08b94f8eeec3",
+    "artifacts/EQ18.json": "533f8871f519d43622aad361d32c62b46cf1134de49d9fd546e73f45f9501a14",
+    "artifacts/CONG18.json": "1cc0a5b5e3ca85c2469ad453b1b921621b44f394045796b55d39509acac40d7a",
+    "artifacts/LATTICE18.json": "4946c81ea3e9b93c5d4fe775a5839a3695e73bd8fa4d76fa7a669596f3572100",
+    "bytecode/HB18.bin": "e11e242cc1bd3ad1f5636b417e0aa1a1f772437c5abbf55e8d1fe8c9d0205b66"
+  },
+  "notes": "Artifacts are tooling for HL (norm/valid). They do not define letters."
+}
