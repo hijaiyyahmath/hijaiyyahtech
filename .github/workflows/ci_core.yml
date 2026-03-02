@@ -1,0 +1,40 @@
+name: CI Core (Python Monorepo)
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+
+jobs:
+  core:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install CI deps
+        run: |
+          python -m pip install -U pip
+          python -m pip install -r requirements-ci.txt
+
+      - name: Install monorepo packages (editable)
+        run: |
+          python -m pip install -e hisa-vm
+          python -m pip install -e hijaiyyahlang-hl18
+          python -m pip install -e cmm18c
+          python -m pip install -e hgss-hc18dc
+          python -m pip install -e hijaiyyah-ai-hgss
+
+      - name: Lint (flake8)
+        run: |
+          flake8 hisa-vm hijaiyyahlang-hl18 cmm18c hgss-hc18dc hijaiyyah-ai-hgss
+
+      - name: Test (pytest core)
+        run: |
+          pytest -q
