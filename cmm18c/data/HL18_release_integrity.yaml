@@ -1,0 +1,45 @@
+release_id: HL-18-v1.0
+dimension: 18
+
+csgi_dataset:
+  path: ../CSGI-28-v1.0.json
+  sha256: "54b9a388f1affe1d89178cb7a314bf3f957a7a7ebe9d727661c98e073fe2aafe"
+
+dataset:
+  mh_28_v1_0_18d_csv:
+    path: ../MH-28-v1.0-18D.csv
+    sha256: "6020188a7929ddf6231ac2f61c96ac0007761f8d0512dd7ce2ffd2ec018f12bd"
+
+normaliz:
+  input:
+    path: ../MH_18x28.in
+    sha256: "773a8a670da8d1f0f81c74831aa1cb50c2eeff50f8ac1b3e226a464fca339719"
+  output:
+    path: ../MH_18x28.out
+    sha256: "51ff55f4cd265a6d4077204b73f8055dc8fee70b91540a19e538f8d5b173edac"
+  metrics_expected:
+    hilbert_basis_size: 38
+    extreme_rays: 25
+    support_hyperplanes: 21
+    rank: 14
+    external_index: 1
+    internal_index: 2
+    equations: 4
+    integrally_closed: false
+
+artifacts:
+  - path: artifacts/MANIFEST.json
+    sha256: "387a7ba24a3c25f731e5b639afb88baddd101c881562ae122bad259a2137b77e"
+  - path: artifacts/HB18.json
+    sha256: "8af1c60c9b570ce2926c8c8f3580c455b93a5824754f9dbc994bdaeccd34e7f5"
+  - path: artifacts/HYP18.json
+    sha256: "fe42de9993f2cef3856bf342a8cdb6cedff5200f78ceb73df75894f7f475fc9f"
+  - path: artifacts/EQ18.json
+    sha256: "5e7850b3d3ede253394abe17064b467f07e93034ff10f488a9a10aa8fc74ad81"
+  - path: artifacts/CONG18.json
+    sha256: "068fab4613b52b2d984fab817592a7e5e4ecd6cecdc4fd36d16661b1e104512d"
+  - path: artifacts/LATTICE18.json
+    sha256: "8846f81015cdce50f8b5c991a76f8c8afce5e4c7f06066afc9378c231b1bef6c"
+  - path: bytecode/HB18.bin
+    sha256: "e11e242cc1bd3ad1f5636b417e0aa1a1f772437c5abbf55e8d1fe8c9d0205b66"
+    optional_size_bytes: 698

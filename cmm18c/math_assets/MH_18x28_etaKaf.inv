@@ -1,0 +1,14 @@
+integer hilbert_basis_elements = 38
+integer number_extreme_rays = 25
+integer dim_max_subspace = 0
+integer embedding_dim = 18
+integer rank = 14
+integer external_index = 1
+integer internal_index = 2
+integer number_support_hyperplanes = 21
+integer size_triangulation = 28
+integer sum_dets = 160
+boolean integrally_closed = false
+boolean inhomogeneous = false
+boolean graded = false
+vector 2 class_group = 7 2 

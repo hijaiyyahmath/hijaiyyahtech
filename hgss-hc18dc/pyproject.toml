@@ -1,0 +1,17 @@
+[project]
+name = "hgss-hc18dc"
+version = "1.0.0"
+description = "Hijaiyyah Crypto Virtual Machine & HGSS Pipeline"
+dependencies = [
+    "cryptography>=42.0.0",
+    "cbor2>=5.6.0"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0.0"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

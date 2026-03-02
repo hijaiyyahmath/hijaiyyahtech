@@ -1,0 +1,7 @@
+# Avoid line ending conversion for artifacts to preserve SHA hashes
+release/**/artifacts/*.json -text
+release/**/bytecode/*.bin  -text
+release/**/*.out           -text
+release/**/*.in            -text
+release/**/*.csv           -text
+specs/*.yaml               -text

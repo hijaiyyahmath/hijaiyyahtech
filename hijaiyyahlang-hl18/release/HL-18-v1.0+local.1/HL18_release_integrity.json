@@ -1,0 +1,62 @@
+{
+    "spec_version": "1.0",
+    "release_id": "HL-18-v1.0+local.1",
+    "dimension": 18,
+    "dataset": {
+        "mh_28_v1_0_18d_csv": {
+            "path": "MH-28-v1.0-18D.csv",
+            "sha256": "6020188a7929ddf6231ac2f61c96ac0007761f8d0512dd7ce2ffd2ec018f12bd"
+        }
+    },
+    "normaliz": {
+        "input": {
+            "path": "MH_18x28.in",
+            "sha256": "773a8a670da8d1f0f81c74831aa1cb50c2eeff50f8ac1b3e226a464fca339719"
+        },
+        "output": {
+            "path": "MH_18x28.out",
+            "sha256": "51ff55f4cd265a6d4077204b73f8055dc8fee70b91540a19e538f8d5b173edac"
+        },
+        "metrics_expected": {
+            "hilbert_basis_size": 38,
+            "extreme_rays": 25,
+            "support_hyperplanes": 21,
+            "rank": 14,
+            "external_index": 1,
+            "internal_index": 2,
+            "equations": 4,
+            "integrally_closed": false
+        }
+    },
+    "artifacts": [
+        {
+            "path": "artifacts/MANIFEST.json",
+            "sha256": "0ee975e5043d8816cab51ad9f37a024f30eb7e9d2e7674c8dd2f1b6f28383b4e"
+        },
+        {
+            "path": "artifacts/HB18.json",
+            "sha256": "d497e6b02538a0c500741a2f4f97e3b79a5b6e4027dfbf5eb1acdb0ca562aef2"
+        },
+        {
+            "path": "artifacts/HYP18.json",
+            "sha256": "30449a4571f14f574010f660f91998289702728b6f494492fb7c08b94f8eeec3"
+        },
+        {
+            "path": "artifacts/EQ18.json",
+            "sha256": "533f8871f519d43622aad361d32c62b46cf1134de49d9fd546e73f45f9501a14"
+        },
+        {
+            "path": "artifacts/CONG18.json",
+            "sha256": "1cc0a5b5e3ca85c2469ad453b1b921621b44f394045796b55d39509acac40d7a"
+        },
+        {
+            "path": "artifacts/LATTICE18.json",
+            "sha256": "4946c81ea3e9b93c5d4fe775a5839a3695e73bd8fa4d76fa7a669596f3572100"
+        },
+        {
+            "path": "bytecode/HB18.bin",
+            "sha256": "e11e242cc1bd3ad1f5636b417e0aa1a1f772437c5abbf55e8d1fe8c9d0205b66",
+            "size_bytes": 698
+        }
+    ]
+}

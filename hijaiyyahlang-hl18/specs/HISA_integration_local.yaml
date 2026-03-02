@@ -1,0 +1,14 @@
+hisa:
+  asm_cmd: ["python", "c:/hijaiyyah-codex/hisa-vm/tools/hisa-asm.py"]
+  run_cmd: ["python", "c:/hijaiyyah-codex/hisa-vm/tools/hisa-run.py"]
+
+  source_ext: ".hisaasm"
+
+  # Template program audit 1 vektor dari master dataset by index.
+  # CORE-1: SETFLAG CLOSED_HINT MUST be immediately before AUDIT.
+  program_template: |
+    ; HL18 -> HISA Audit Program
+    LDH_V18 V0, {INDEX}
+    SETFLAG CLOSED_HINT, {CLOSED_HINT}
+    AUDIT V0
+    HALT
