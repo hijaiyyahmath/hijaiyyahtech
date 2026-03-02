@@ -12,7 +12,7 @@ python scripts/run_tests_all.py
 python scripts/run_demos_all.py
 
 # Web sample
-curl http://localhost:3000/hijaiyyahtech/downloads/hgss/evidence.json`;
+curl https://hijaiyyahmath.github.io/hijaiyyahtech/downloads/hgss/evidence.json`;
 
     return (
         <div className="space-y-6">
