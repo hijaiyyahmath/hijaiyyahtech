@@ -19,7 +19,19 @@ export async function loadAuditorBundles(): Promise<AuditorBundle[]> {
     const raw = await fs.readFile(p, "utf-8");
     const data = JSON.parse(raw);
     if (!Array.isArray(data)) throw new Error("auditor_bundles.json must be an array");
-    return data as AuditorBundle[];
+
+    const bundles = data as AuditorBundle[];
+
+    // Fail-closed: require valid ISO date strings and sort newest-first deterministically.
+    for (const b of bundles) {
+        const t = Date.parse(b.date);
+        if (Number.isNaN(t)) {
+            throw new Error(`auditor_bundles.json: invalid date for bundle_id=${b.bundle_id}: ${JSON.stringify(b.date)}`);
+        }
+    }
+
+    bundles.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+    return bundles;
 }
 
 export function bundleAnchorId(b: AuditorBundle): string {

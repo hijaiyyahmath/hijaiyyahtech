@@ -43,6 +43,57 @@ jobs:
           test -f out/en/artifacts/evidence.json
         working-directory: web/apps/hijaiyyahmath-org
 
+      - name: Head-check GitHub Release URLs (fail-closed)
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require("fs");
+          const path = require("path");
+          const p = path.join(process.cwd(), "public", "releases", "auditor_bundles.json");
+          const data = JSON.parse(fs.readFileSync(p, "utf8"));
+          if (!Array.isArray(data)) throw new Error("auditor_bundles.json must be an array");
+          const keys = ["tar_url", "sha256sums_url", "github_release_url"];
+          const urls = [];
+          for (const b of data) {
+            for (const k of keys) {
+              const u = b?.[k];
+              if (typeof u === "string" && /^https?:\/\// .test(u)) {
+                urls.push({ bundle_id: b.bundle_id, key: k, url: u });
+              }
+            }
+          }
+          // Print as lines for bash loop
+          for (const x of urls) console.log(`${x.bundle_id}\t${x.key}\t${x.url}`);
+          NODE
+          echo "----"
+          # HEAD-check all absolute URLs. Accept any 2xx/3xx.
+          # (GitHub /download/ typically returns 302)
+          while IFS=$'\t' read -r bundle_id key url; do
+            [ -z "${url:-}" ] && continue
+            code="$(curl -sS -I -o /dev/null -w "%{http_code}" "$url" || true)"
+            echo "$bundle_id $key $code $url"
+            case "$code" in
+              2*|3*) : ;;
+              *) echo "FAIL: URL not reachable (expected 2xx/3xx): $url" >&2; exit 1 ;;
+            esac
+          done < <(node - <<'NODE'
+          const fs = require("fs");
+          const path = require("path");
+          const p = path.join(process.cwd(), "public", "releases", "auditor_bundles.json");
+          const data = JSON.parse(fs.readFileSync(p, "utf8"));
+          const keys = ["tar_url", "sha256sums_url", "github_release_url"];
+          for (const b of data) {
+            for (const k of keys) {
+              const u = b?.[k];
+              if (typeof u === "string" && /^https?:\/\// .test(u)) {
+                console.log(`${b.bundle_id}\t${k}\t${u}`);
+              }
+            }
+          }
+          NODE
+          )
+        working-directory: web/apps/hijaiyyahmath-org
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
