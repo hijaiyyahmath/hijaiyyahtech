@@ -16,10 +16,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python
+      - name: Set up Python (locked)
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version-file: .python-version
+          cache: "pip"
+
+      - name: Fail-closed Python version check
+        run: |
+          python -V
+          python -c "import sys; assert sys.version_info >= (3,10)"
 
       - name: Install dependencies
         run: |
