@@ -20,9 +20,13 @@ source .venv/bin/activate
 
 # 3) Install dependencies
 echo "Installing dependencies..."
+pip install --upgrade pip setuptools wheel
 pip install -r requirements.lock.txt
-pip install -e hl18
-pip install -e hisa-vm
+pip install -e hl18 -e hisa-vm
+
+# Verify installation
+echo "Checking package availability..."
+python -c "import hijaiyyahlang; import hisavm; print('OK: packages found')"
 
 # 4) Run Verification
 echo "=== Phase 1: Conformance Verification ==="

@@ -20,11 +20,16 @@ $VenvPath = Join-Path $RootDir ".venv\Scripts\Activate.ps1"
 
 # 3) Install dependencies
 Write-Host "Installing dependencies..."
+pip install --upgrade pip setuptools wheel
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 pip install -r requirements.lock.txt
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-pip install -e hl18
+pip install -e hl18 -e hisa-vm
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-pip install -e hisa-vm
+
+# Verify installation
+Write-Host "Checking package availability..."
+python -c "import hijaiyyahlang; import hisavm; Write-Host 'OK: packages found'"
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 # 4) Run Verification

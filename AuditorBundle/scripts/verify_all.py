@@ -11,6 +11,11 @@ def main() -> None:
     sys.stdout.reconfigure(encoding='utf-8')
     sys.stderr.reconfigure(encoding='utf-8')
     root = Path(__file__).resolve().parents[1]
+    
+    # Ensure local sources are in path regardless of pip install success
+    sys.path.insert(0, str(root / "hisa-vm" / "src"))
+    sys.path.insert(0, str(root / "hl18" / "src"))
+    
     art = root / "artifacts" / "verify_all"
     art.mkdir(parents=True, exist_ok=True)
 
