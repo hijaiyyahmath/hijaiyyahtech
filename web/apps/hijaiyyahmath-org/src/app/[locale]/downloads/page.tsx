@@ -28,8 +28,8 @@ export default async function DownloadsPage({ params }: { params: { locale: stri
         {bundles.map((b) => {
             const anchor = bundleAnchorId(b);
             const isLatest = b === bundles[0];
-            const tarUrl = isLatest ? `/${params.locale}/downloads/auditor-bundle` : b.tar_url;
-            const shaUrl = isLatest ? `/${params.locale}/downloads/sha256sums` : b.sha256sums_url;
+            const tarUrl = isLatest ? `/hijaiyyahtech/${params.locale}/downloads/auditor-bundle/` : b.tar_url;
+            const shaUrl = isLatest ? `/hijaiyyahtech/${params.locale}/downloads/sha256sums/` : b.sha256sums_url;
 
             return (
                 <section key={b.bundle_id} className={styles.card}>
