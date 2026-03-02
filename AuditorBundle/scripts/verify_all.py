@@ -1,9 +1,10 @@
 from __future__ import annotations
-import subprocess
+import subprocess, os
 from pathlib import Path
 
 def run(cmd: list[str], cwd: Path) -> tuple[int, str, str]:
-    cp = subprocess.run(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+    env = os.environ.copy()
+    cp = subprocess.run(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, check=False)
     return cp.returncode, cp.stdout.decode("utf-8","replace"), cp.stderr.decode("utf-8","replace")
 
 def main() -> None:

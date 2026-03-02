@@ -1,5 +1,5 @@
 from __future__ import annotations
-import subprocess, re
+import subprocess, re, os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Optional, Sequence, Tuple, Any
@@ -107,7 +107,8 @@ class HISAVMRunner:
         src.write_text(program.strip() + "\n", encoding="utf-8")
 
         asm_cmd = list(self.cfg.asm_cmd) + ["--in", str(src), "--out", str(binp)]
-        cp_asm = subprocess.run(asm_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+        env = os.environ.copy()
+        cp_asm = subprocess.run(asm_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, check=False)
         if cp_asm.returncode != 0 or not binp.exists():
             raise ConformanceError(
                 "HISA-ASM failed\n"
@@ -117,7 +118,8 @@ class HISAVMRunner:
             )
 
         run_cmd = list(self.cfg.run_cmd) + ["--program", str(binp), "--master", str(master_csv)]
-        cp_run = subprocess.run(run_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+        env = os.environ.copy()
+        cp_run = subprocess.run(run_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, check=False)
         if cp_run.returncode != 0:
             # We don't always raise ConformanceError on returncode != 0 because HISA-VM might return 1 on TRAP
             # But the user's snippet uses cp_run.returncode != 0 to raise ConformanceError.
