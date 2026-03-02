@@ -75,10 +75,11 @@ export default function ReleaseMatrixTable({ stackVersion, modules }: Props) {
         <div className="rounded-xl border bg-white dark:bg-gray-950 dark:border-gray-800">
             <div className="flex flex-col gap-3 border-b px-4 py-3 dark:border-gray-800 md:flex-row md:items-center md:justify-between">
                 <div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Release Identity Matrix</div>
-                    <div className="font-semibold">{stackVersion}</div>
-                    <div className="mt-1 text-xs text-gray-500">
-                        Source: <span className="font-mono">src/content/release_matrix.json</span>
+                    <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">Release Identity Matrix — Version Lock Registry</div>
+                    <div className="text-2xl font-bold text-black dark:text-white mt-1">{stackVersion}</div>
+                    <div className="mt-2 text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                        <div>Canonical cryptographic registry of all module releases, tags, and integrity hashes.</div>
+                        <div>Search by layer, module name, release ID, status, or commit hash below.</div>
                     </div>
                 </div>
 
@@ -163,38 +164,46 @@ export default function ReleaseMatrixTable({ stackVersion, modules }: Props) {
                                         <tr className="border-t bg-white dark:bg-gray-950 dark:border-gray-800">
                                             <td colSpan={5} className="px-4 py-4">
                                                 <div className="grid gap-4 lg:grid-cols-2">
-                                                    <div className="space-y-2">
-                                                        <div className="text-xs font-semibold text-gray-600 dark:text-gray-400">Locked Metadata</div>
-                                                        <div className="text-sm">
-                                                            {m.tag ? (
-                                                                <div>
-                                                                    <span className="text-gray-600 dark:text-gray-400">tag:</span>{" "}
-                                                                    <span className="font-mono">{m.tag}</span>
-                                                                </div>
-                                                            ) : null}
-                                                            {m.git_hash ? (
-                                                                <div>
-                                                                    <span className="text-gray-600 dark:text-gray-400">git_hash:</span>{" "}
-                                                                    <span className="font-mono">{m.git_hash}</span>
-                                                                </div>
-                                                            ) : null}
-                                                            {m.spec ? (
-                                                                <div>
-                                                                    <span className="text-gray-600 dark:text-gray-400">spec:</span>{" "}
-                                                                    <span className="font-mono">{m.spec}</span>
-                                                                </div>
-                                                            ) : null}
-                                                            {m.depends_on ? (
-                                                                <div>
-                                                                    <span className="text-gray-600 dark:text-gray-400">depends_on:</span>{" "}
-                                                                    <span className="font-mono">{m.depends_on}</span>
-                                                                </div>
-                                                            ) : null}
+                                                    <div className="space-y-3">
+                                                        <div>
+                                                            <div className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
+                                                                🔐 Locked Metadata
+                                                                <span className="text-[10px] font-normal text-gray-500">(Cryptographic Integrity Locks)</span>
+                                                            </div>
+                                                            <div className="text-sm space-y-1">
+                                                                {m.tag ? (
+                                                                    <div className="rounded border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-2">
+                                                                        <span className="text-gray-600 dark:text-gray-400 font-semibold text-xs">Git Tag:</span>{" "}
+                                                                        <span className="font-mono text-sm">{m.tag}</span>
+                                                                    </div>
+                                                                ) : null}
+                                                                {m.git_hash ? (
+                                                                    <div className="rounded border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-2">
+                                                                        <span className="text-gray-600 dark:text-gray-400 font-semibold text-xs">Commit Hash:</span>{" "}
+                                                                        <span className="font-mono text-sm">{m.git_hash}</span>
+                                                                    </div>
+                                                                ) : null}
+                                                                {m.spec ? (
+                                                                    <div className="rounded border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-2">
+                                                                        <span className="text-gray-600 dark:text-gray-400 font-semibold text-xs">Specification:</span>{" "}
+                                                                        <span className="font-mono text-sm">{m.spec}</span>
+                                                                    </div>
+                                                                ) : null}
+                                                                {m.depends_on ? (
+                                                                    <div className="rounded border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-2">
+                                                                        <span className="text-gray-600 dark:text-gray-400 font-semibold text-xs">Depends On:</span>{" "}
+                                                                        <span className="font-mono text-sm">{m.depends_on}</span>
+                                                                    </div>
+                                                                ) : null}
+                                                            </div>
                                                         </div>
 
                                                         {m.artifacts?.length ? (
                                                             <>
-                                                                <div className="pt-2 text-xs font-semibold text-gray-600 dark:text-gray-400">Artifacts / Hash Locks</div>
+                                                                <div className="pt-2 text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                                                                    🔏 Artifacts / Hash Locks
+                                                                    <span className="text-[10px] font-normal text-gray-500">(SHA-256 integrity verification)</span>
+                                                                </div>
                                                                 <ul className="space-y-1 text-xs">
                                                                     {m.artifacts.map((a, i) => (
                                                                         <li key={i} className="flex items-start justify-between gap-3 rounded-md border bg-gray-50 p-2 dark:bg-gray-900 dark:border-gray-800">
@@ -215,53 +224,69 @@ export default function ReleaseMatrixTable({ stackVersion, modules }: Props) {
                                                         ) : null}
                                                     </div>
 
-                                                    <div className="space-y-2">
-                                                        <div className="flex items-center justify-between">
-                                                            <div className="text-xs font-semibold text-gray-600 dark:text-gray-400">Verification Commands</div>
+                                                    <div className="space-y-3">
+                                                        <div>
+                                                            <div className="flex items-center justify-between">
+                                                                <div className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                                                                    ✓ Verification Commands
+                                                                    <span className="text-[10px] font-normal text-gray-500">(Run these to verify this release)</span>
+                                                                </div>
+                                                                {m.verify_commands?.length ? (
+                                                                    <button
+                                                                        className="rounded-md bg-black text-white px-2 py-1 text-xs hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                                                                        onClick={() => copy(m.verify_commands!.join("\n"))}
+                                                                        title="Copy all verification commands to clipboard"
+                                                                    >
+                                                                        Copy All
+                                                                    </button>
+                                                                ) : null}
+                                                            </div>
+
                                                             {m.verify_commands?.length ? (
-                                                                <button
-                                                                    className="rounded-md border px-2 py-1 text-xs hover:bg-gray-50 dark:hover:bg-gray-900 dark:border-gray-800"
-                                                                    onClick={() => copy(m.verify_commands!.join("\n"))}
-                                                                    title="Copy all verification commands"
-                                                                >
-                                                                    Copy All
-                                                                </button>
-                                                            ) : null}
+                                                                <div className="space-y-2 mt-2">
+                                                                    {m.verify_commands.map((cmd, i) => (
+                                                                        <div key={i} className="rounded-md border bg-gray-50 p-2 dark:bg-gray-900 dark:border-gray-800">
+                                                                            <div className="flex items-center justify-between gap-2">
+                                                                                <div className="min-w-0 font-mono text-xs break-all text-gray-700 dark:text-gray-300">{cmd}</div>
+                                                                                <button
+                                                                                    className="shrink-0 rounded-md border bg-white px-2 py-1 text-xs hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-900 dark:border-gray-800"
+                                                                                    onClick={() => copy(cmd)}
+                                                                                    title="Copy this command to clipboard"
+                                                                                >
+                                                                                    Copy
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            ) : (
+                                                                <div className="text-sm text-gray-500 mt-2 italic">No verification commands provided for this module.</div>
+                                                            )}
                                                         </div>
 
-                                                        {m.verify_commands?.length ? (
-                                                            <div className="space-y-2">
-                                                                {m.verify_commands.map((cmd, i) => (
-                                                                    <div key={i} className="rounded-md border bg-gray-50 p-2 dark:bg-gray-900 dark:border-gray-800">
-                                                                        <div className="flex items-center justify-between gap-2">
-                                                                            <div className="min-w-0 font-mono text-xs break-all">{cmd}</div>
-                                                                            <button
-                                                                                className="shrink-0 rounded-md border bg-white px-2 py-1 text-xs hover:bg-gray-50 dark:bg-gray-950 dark:hover:bg-gray-900 dark:border-gray-800"
-                                                                                onClick={() => copy(cmd)}
-                                                                            >
-                                                                                Copy
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        ) : (
-                                                            <div className="text-sm text-gray-500">No commands provided for this module.</div>
-                                                        )}
-
                                                         {m.public_downloads?.length ? (
-                                                            <>
-                                                                <div className="pt-3 text-xs font-semibold text-gray-600 dark:text-gray-400">Public Downloads</div>
-                                                                <ul className="space-y-1 text-sm">
+                                                            <div>
+                                                                <div className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                                                                    📥 Public Downloads
+                                                                    <span className="text-[10px] font-normal text-gray-500">(Offline-ready artifacts)</span>
+                                                                </div>
+                                                                <ul className="space-y-1 text-sm mt-2">
                                                                     {m.public_downloads.map((u, i) => (
-                                                                        <li key={i}>
-                                                                            <a className="text-blue-700 underline" href={u} target="_blank">
+                                                                        <li key={i} className="rounded border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950 p-2 flex items-center justify-between gap-2">
+                                                                            <a className="text-blue-700 dark:text-blue-300 underline break-all flex-1" href={u} target="_blank" rel="noopener noreferrer" title="Open in new tab">
                                                                                 {u}
                                                                             </a>
+                                                                            <button
+                                                                                className="shrink-0 rounded px-2 py-1 text-xs bg-blue-700 text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 whitespace-nowrap"
+                                                                                onClick={() => copy(u)}
+                                                                                title="Copy download link to clipboard"
+                                                                            >
+                                                                                Copy Link
+                                                                            </button>
                                                                         </li>
                                                                     ))}
                                                                 </ul>
-                                                            </>
+                                                            </div>
                                                         ) : null}
                                                     </div>
                                                 </div>
