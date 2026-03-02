@@ -12,6 +12,28 @@ from typing import Dict, Iterable, Tuple
 EXCLUDE_DIRS = {".git", ".venv", "__pycache__", "node_modules", "dist", ".next"}
 EXCLUDE_FILES = {".DS_Store"}
 
+REQUIRED_ARTIFACTS = [
+    "release/HL-18-v1.0+local.1/artifacts/MANIFEST.json",
+    "release/HL-18-v1.0+local.1/artifacts/HB18.json",
+    "release/HL-18-v1.0+local.1/artifacts/HYP18.json",
+    "release/HL-18-v1.0+local.1/artifacts/EQ18.json",
+    "release/HL-18-v1.0+local.1/artifacts/CONG18.json",
+    "release/HL-18-v1.0+local.1/artifacts/LATTICE18.json",
+    "release/HL-18-v1.0+local.1/MH-28-v1.0-18D.csv",
+    "release/CSGI-28-v1.0.json",
+]
+
+def require_files(bundle_dir: Path, rel_paths: list[str]) -> None:
+    missing = []
+    for rp in rel_paths:
+        p = bundle_dir / rp
+        if not p.exists():
+            missing.append(rp)
+    if missing:
+        raise SystemExit(
+            "FAIL: bundle missing required HL-18 release artifacts:\n- " + "\n- ".join(missing)
+        )
+
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as f:
@@ -126,6 +148,9 @@ def main() -> None:
     dist_dir = Path(args.dist_dir).resolve()
     tar_name = args.tar_name or f"{args.bundle_id}.tar.gz"
     out_tar = dist_dir / tar_name
+
+    # 0) Hardening: check required artifacts
+    require_files(bundle_dir, REQUIRED_ARTIFACTS)
 
     # 1) MANIFEST.json + SHA256SUMS.txt inside bundle
     files = build_manifest(bundle_dir, args.bundle_id)
