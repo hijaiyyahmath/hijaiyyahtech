@@ -5,7 +5,7 @@
         "hl18_release_id": "HL-18-v1.0+local.1",
         "hisa_vm_release_id": "HISA-VM-v1.0+local.1",
         "tar_url": "https://github.com/hijaiyyahmath/hijaiyyahtech/releases/download/stack-v1.0/HijaiyyahStack-AuditorBundle-v1.0_2026-03-01.tar.gz",
-        "tar_sha256": "2f15cb1c341f44951995012cb1f8ce5e9f867e1f7db3466011a7c5b2b568d579",
+        "tar_sha256": "a67929e16d42a5a26bf9c5127e0d770a01e2a4c536c2197d3f524a0e0e351a0d",
         "sha256sums_url": "https://github.com/hijaiyyahmath/hijaiyyahtech/releases/download/stack-v1.0/SHA256SUMS.txt",
         "docker_image": "ghcr.io/hijaiyyah/stack-auditor",
         "docker_digest": null,
