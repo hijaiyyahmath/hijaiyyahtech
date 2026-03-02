@@ -27,8 +27,8 @@ export default async function DownloadsPage({ params }: { params: { locale: stri
                         </ul>
 
                         <div className={styles.actions}>
-                            <a className={styles.button} href={b.tar_url}>Download .tar.gz</a>
-                            <a className={styles.buttonSecondary} href={b.sha256sums_url}>SHA256SUMS.txt</a>
+                            <a className={styles.button} href={b.tar_url} download>Download .tar.gz</a>
+                            <a className={styles.buttonSecondary} href={b.sha256sums_url} download>SHA256SUMS.txt</a>
                             <Link className={styles.buttonSecondary} href={`/${params.locale}/docs/auditor-quickstart#${anchor}`}>
                                 Quickstart
                             </Link>
