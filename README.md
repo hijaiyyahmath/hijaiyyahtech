@@ -311,54 +311,60 @@ Checks version locks, test vector consistency, demo bytecode determinism, audit 
 
 ---
 
-## BAGIAN VI: HCVM + HGSS + HC18DC (EVIDENCE-GRADE SECURITY)
+## BAGIAN VI: HCVM + HGSS + HC18DC — Evidence-Grade Security Framework
 
-### HCVM: Deterministic Crypto Virtual Machine
+### HCVM: Cryptographic Virtual Machine for HGSS Pipeline
 
-**HCVM** extends HISA-VM with cryptographic operations for HGSS security pipeline, adding CBOR_ENC, SHA256, HMAC_KDF, VERIFY_SIG, NONCE_LEASE instructions for evidence serialization, integrity verification, entropy-locked reproducible randomness, and non-repudiation.
+**HCVM** extends HISA-VM with cryptographic operations enabling deterministic evidence generation and non-repudiation:
 
-**Entropy-Locked Execution**: CSPRNG generates deterministic random values from locked seed, nonce leasing prevents key reuse, all randomness is reproducible on re-execution.
+- **CBOR_ENC**: RFC 8949 canonical encoding for verifiable artifact serialization
+- **SHA256**: Cryptographic integrity over all computed vectors
+- **HMAC_KDF**: Entropy-locked key derivation from master seed
+- **VERIFY_SIG**: Non-repudiation via oracle signature validation
+- **NONCE_LEASE**: Range-governed nonce allocation preventing key reuse
 
-### HGSS: Guarded Signature Scheme (Evidence Subsystem)
+**Entropy-Locked Execution**: All randomness is seeded from locked master key; nonces are deterministically derived and leased per execution. Reproducible replays with same seed produce identical outputs.
 
-**Objective**: Non-disputable evidence generation with fail-closed audit gates.
+### HGSS: Guarded Signature Scheme — Oracle-Verified Evidence
 
-**Oracle Loops & Repair**:
-1. Baseline execution via HCPU-AI CORE mode
-2. Oracle verification against HL-18 ground truth
-3. Match → Attestation gate ✓
-4. Divergence → Repair (multi-run consensus, re-derive vectors, log anomaly)
-5. Final consensus result + evidence.json with oracle signature
+**HGSS** provides oracle-grade non-repudiation with deterministic repair and consensus:
 
-**Non-Repudiation**: Results are cryptographically signed; proof is binding.
+**Execution Flow**:
+1. Input: v18 vector via HCPU-AI CORE mode
+2. Oracle verification: Compare vs HL-18 ground truth
+3. Consensus check: Single-run PASS → immediate attestation ✓
+4. Divergence handling: Multi-run consensus, repair anomalies, log evidence
+5. Output: Final consensus v18 vector + evidence.json with oracle signature
 
-### HC18DC: Canonical Output Artifact
+**Cryptographic Properties**:
+- **Non-Repudiation**: Oracle-signed proof cryptographically binds execution to identity
+- **Fail-Closed**: Any constraint violation halts computation
+- **Reproducible**: Same input (with same entropy seed) produces identical outputs
 
-**Definition**: HC18DC is the frozen canonical form of all HGSS/HCVM outputs, representing 18D integer vectors isomorphic to v18 codex geometry with frozen schema locks, SHA-256 integrity, and non-disputable legal-grade format.
+### HC18DC: Canonical Frozen Artifact
 
-**Schema Structure**:
-```json
-{
-  "version": "HC18DC-v1",
-  "schema_version": "1.0",
-  "output_vector": [w₀, ..., w₁₇],
-  "geometry_metadata": {
-    "an_check": true, "ak_check": true, "aq_check": true, "mod4_gate": true
-  },
-  "execution_trace": {"mode": "FEEDBACK", "steps": 42, "repairs": 0},
-  "cryptographic_binding": {
-    "event_sha256": "...",
-    "oracle_signature": "...",
-    "timestamp": "2026-03-03T14:22:31Z"
-  }
-}
-```
+**HC18DC** is the immutable output representation of all HGSS/HCVM computations:
 
-**Frozen Schema Validation**:
-- Client-side: Field presence, types, constraints (fail-closed on violation)
-- Server-side: CBOR decoding, SHA-256 recomputation, signature verification, timestamp freshness
+**Format**: 18-dimensional integer vector with cryptographic locks, geometry metadata, execution trace, and oracle attestation
 
-**RFC 8949 Canonical CBOR**: Single deterministic encoding ensures reproducible verification by third parties without proprietary code.
+**Fields**:
+- `output_vector`: [w₀, ..., w₁₇] (18 × u32 integers)
+- `geometry_metadata`: AN/AK/AQ/mod4 validation flags
+- `execution_trace`: Mode, step count, repair log
+- `cryptographic_binding`: SHA-256 hash + oracle signature + timestamp
+
+**Validation Rules** (Fail-Closed):
+
+| Check | Level | Failure |
+|-------|-------|---------|
+| Field presence & types | Client-side | Reject artifact |
+| Constraint satisfaction | Client-side | Reject artifact |
+| CBOR canonical encoding | Server-side | Reject artifact |
+| SHA-256 digest match | Server-side | Reject artifact |
+| Oracle signature valid | Server-side | Reject artifact |
+| Timestamp freshness | Server-side | Reject artifact |
+
+**Interoperability**: RFC 8949 CBOR ensures third-party verification without proprietary code. Single deterministic representation.
 
 ---
 
